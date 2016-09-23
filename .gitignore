@@ -6,3 +6,4 @@
 *.zip
 *.fig
 *.lyx
+.DS*
