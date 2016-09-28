@@ -47,17 +47,19 @@ aggEmployment = vEpsilonGrid'*vEpsilonInvariant ;
 % mZTransition = [0.98 0.02;
 %                 0.95 0.05] ;
 
-% [vZGrid,mZTransition] = MarkovAR_95(3,0.9,0.01) ;
-% vZGrid = exp(vZGrid) ; 
+% [vZGrid,mZTransition] = MarkovAR_95(3,0.7,0.01) ;
+[vZGrid,mZTransition] = MarkovAR(3,4.5,0.5,0.11) ;
+vZGrid = exp(vZGrid)' ; 
 
-vZGrid = [0 0.01 2.5] ;
-mZTransition = [0.98 0.00  0.02;
-                0.00 0.98  0.02;
-                0.50 0.45  0.05];
+
+%vZGrid = [0 1.2 2.3] ;
+%mZTransition = [0.97 0.02  0.01;
+%                0.90 0.08  0.02;
+%                0.93 0.06  0.01];
                   
 [vZInvariant,~]  = eig(mZTransition') ;
 vZInvariant = vZInvariant(:,1)/sum(vZInvariant(:,1)) ;
-
+disp('vZGrid vZInvariant'); disp([vZGrid' vZInvariant])
 
 % Aggregate Shocks
 rrhoTFP = .859;										
@@ -92,7 +94,7 @@ kRepSS = ((aalpha * (aggEmployment ^ (1 - aalpha))) / ((1 / (bbeta*ggamma)) - (1
 assetsMin = aaBar;	assetsMax = 100;
 
 % Finer grid for analyzing policy functions
-nAssetsFine = 100;
+nAssetsFine = 150;
 AssetsGridCurvature = 3.0 ;
 nStateFine = nEpsilon * nZ * nAssetsFine;
 

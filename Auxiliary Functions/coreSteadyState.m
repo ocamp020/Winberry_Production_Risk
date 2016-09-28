@@ -57,10 +57,15 @@ disp((mmu*p_ss*vZGrid.^mmu/(r_ss+ddelta)).^(1/(1-mmu)))
 
 [~,mHistogram,mAssetsPrime_Histogram,mConsumption_Histogram] = find_SS_histogram(x) ;
     figure
-        subplot(2,2,1); plot(vAssetsGridFine,mHistogram(:,1,1) / sum(mHistogram(:,1,1))); title('Dist: e(low) z(low)')
-        subplot(2,2,2); plot(vAssetsGridFine,mHistogram(:,1,2) / sum(mHistogram(:,1,2))); title('Dist: e(low) z(high)')
-        subplot(2,2,3); plot(vAssetsGridFine,mHistogram(:,2,1) / sum(mHistogram(:,2,1))); title('Dist: e(high) z(low)')
-        subplot(2,2,4); plot(vAssetsGridFine,mHistogram(:,2,2) / sum(mHistogram(:,2,2))); title('Dist: e(high) z(high)')
+        subplot(3,3,1); plot(vAssetsGridFine,mHistogram(:,1,1) / sum(mHistogram(:,1,1))); title('Dist: e(low) z(low)')
+        subplot(3,3,2); plot(vAssetsGridFine,mHistogram(:,1,2) / sum(mHistogram(:,1,2))); title('Dist: e(low) z(med)')
+        subplot(3,3,3); plot(vAssetsGridFine,mHistogram(:,1,3) / sum(mHistogram(:,1,3))); title('Dist: e(low) z(high)')
+        subplot(3,3,4); plot(vAssetsGridFine,mHistogram(:,2,1) / sum(mHistogram(:,2,1))); title('Dist: e(med) z(low)')
+        subplot(3,3,5); plot(vAssetsGridFine,mHistogram(:,2,2) / sum(mHistogram(:,2,2))); title('Dist: e(med) z(med)')
+        subplot(3,3,6); plot(vAssetsGridFine,mHistogram(:,2,3) / sum(mHistogram(:,2,3))); title('Dist: e(med) z(high)')
+        subplot(3,3,7); plot(vAssetsGridFine,mHistogram(:,3,1) / sum(mHistogram(:,3,1))); title('Dist: e(high) z(low)')
+        subplot(3,3,8); plot(vAssetsGridFine,mHistogram(:,3,2) / sum(mHistogram(:,3,2))); title('Dist: e(high) z(med)')
+        subplot(3,3,9); plot(vAssetsGridFine,mHistogram(:,3,3) / sum(mHistogram(:,3,3))); title('Dist: e(high) z(high)')
     figure; 
         plot(vAssetsGridFine,sum(sum(mHistogram,3),2) ); title('Dist: All')
     figure; 
@@ -68,10 +73,15 @@ disp((mmu*p_ss*vZGrid.^mmu/(r_ss+ddelta)).^(1/(1-mmu)))
     figure; 
         plot(log(vAssetsGridFine(1:end-1)),log(1-cumsum(sum(sum(mHistogram(1:end-1,:,:),3),2))) ) ; title('Dist: Pareto Tail')
     figure
-        subplot(2,2,1); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,1,1) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(low) z(low)')
-        subplot(2,2,2); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,1,2) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(low) z(high)')
-        subplot(2,2,3); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,2,1) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(high) z(low)')
-        subplot(2,2,4); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,2,2) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(high) z(high)')
+        subplot(3,3,1); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,1,1) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(low) z(low)')
+        subplot(3,3,2); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,1,2) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(low) z(med)')
+        subplot(3,3,3); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,1,3) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(low) z(high)')
+        subplot(3,3,4); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,2,1) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(med) z(low)')
+        subplot(3,3,5); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,2,2) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(med) z(med)')
+        subplot(3,3,6); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,2,3) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(med) z(high)')
+        subplot(3,3,7); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,3,1) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(high) z(low)')
+        subplot(3,3,8); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,3,2) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(high) z(med)')
+        subplot(3,3,9); plot(vAssetsGridFine,mAssetsPrime_Histogram(:,3,3) ,vAssetsGridFine,vAssetsGridFine); title('Ap: e(high) z(high)')
 
 % Compute moments from histogram
 mMomentsHistogram = zeros(nEpsilon,nZ,nMeasure);

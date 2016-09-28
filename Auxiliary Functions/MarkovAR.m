@@ -38,5 +38,7 @@ function [z_grid,P] = MarkovAR(n_z,lambda,rho,sigma)
         end
         P(n_z,i)=1-sum(P(1:n_z-1,i)) ;
     end
+   
+    P = P' ;
 
 end
