@@ -22,7 +22,14 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
     
 %% Agent's value and policy functions (by discrete VFI)
     [Ap_W_VFI,Ap_E_VFI,OC_W_VFI,OC_E_VFI,VW_VFI,VE_VFI] = Discrete_VFI(r,p,w) ;
-    % disp(VW_VFI(:))        
+    % disp(VW_VFI(:)) 
+%     figure; plot(vA_Grid,[VW_VFI(:,:,1),VW_VFI(:,:,2),VW_VFI(:,:,3)]); title('VW');
+%     figure; plot(vA_Grid,[VE_VFI(:,:,1),VE_VFI(:,:,2),VE_VFI(:,:,3)]); title('VE');
+%     figure; plot(vA_Grid,[Ap_W_VFI(:,:,1),Ap_W_VFI(:,:,2),Ap_W_VFI(:,:,3)]); title('Ap_W');
+%     figure; plot(vA_Grid,[Ap_E_VFI(:,:,1),Ap_E_VFI(:,:,2),Ap_E_VFI(:,:,3)]); title('Ap_E');
+%     figure; plot(vA_Grid,[OC_W_VFI(:,:,1),OC_W_VFI(:,:,2),OC_W_VFI(:,:,3)]); title('Ap_W');
+%     figure; plot(vA_Grid,[OC_E_VFI(:,:,1),OC_E_VFI(:,:,2),OC_E_VFI(:,:,3)]); title('Ap_E');
+    
     
 %% Stationary distribution (Histogram)
     

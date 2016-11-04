@@ -38,6 +38,20 @@ clear all; close all; clc;
 
 
 %% Graphs 
+    figure; 
+    plot(vA_Grid,[sum(sum(mDBN_W,3),2)/sum(sum(sum(mDBN_W))),sum(sum(mDBN_E,3),2)/sum(sum(sum(mDBN_E)))])
+    xlabel('Wealth')
+    title('Wealth Distribution'); legend('Workers','Entrepreneurs','location','southoutside','orientation','horizontal')
+    set(gcf,'color','w')
+    print('-depsc','SS_Distribution_Wealth.eps')
+    
+    
+    figure; 
+    plot(vA_Grid,[sum(sum(mDBN_W,3),2)/sum(sum(sum(mDBN_W))),sum(sum(mDBN_E,3),2)/sum(sum(sum(mDBN_E)))])
+    xlabel('Wealth')
+    title('Wealth Distribution'); legend('Workers','Entrepreneurs','location','southoutside','orientation','horizontal')
+    set(gcf,'color','w')
+    print('-depsc','SS_Distribution_Wealth.eps')
 
 
 

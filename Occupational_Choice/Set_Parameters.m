@@ -32,8 +32,8 @@ global n_E n_Z n_A n_State ...
 	
 % Order of approximation
 n_E     = 3   ; % number of gridpoints for labor productivity
-n_Z     = 3   ; % number of gridpoints for entrepreneurial productivity
-n_A     = 100 ; % number of gridpoints for assets
+n_Z     = 5   ; % number of gridpoints for entrepreneurial productivity
+n_A     = 75  ; % number of gridpoints for assets
 n_State = n_E * n_Z * n_A;
 
 % Bounds on grid space
@@ -50,17 +50,19 @@ if n_E == 2
                          ((1 - aggEmployment) / aggEmployment) * (1 - (uDuration / (1 + uDuration))),...
                          1 - ((1 - aggEmployment) / aggEmployment) * (1 - (uDuration / (1 + uDuration)))];
     vE_Invariant = [1 - aggEmployment;aggEmployment];
-else 
-    n_E = 3 ; 
+elseif n_E == 3
     vE_Grid = [0.1 ; 1 ; 10] ;
     mE_Transition = [0.3  0.7  0.0;
                           0.1  0.8  0.1;
                           0.05 0.65 0.3];
+else
+    [vE_Grid,mE_Transition] = MarkovAR(n_E,3,0.9,0.03) ;
+    vE_Grid = exp(vE_Grid) ;
+end 
     [vE_Invariant,~]  = eig(mE_Transition') ;
     vE_Invariant      = vE_Invariant(:,1)/sum(vE_Invariant(:,1)) ;
 
     aggEmployment = vE_Grid'*vE_Invariant ;
-end 
 
 % Entrepreneurial Productivity Types
 if n_Z == 2
