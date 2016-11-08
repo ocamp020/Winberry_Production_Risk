@@ -6,7 +6,7 @@ function [mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out] = Discrete_VFI(r,
 
 %% Initialization (global variables)
     global bbeta ggamma ddelta mmu llambda tau_k vKappa ...
-    	   mE_Transition  ...
+    	   mE_Transition_W_VFI mE_Transition_E_VFI  ...
            n_E n_Z n_A vA_Grid mA_Grid mZ_Grid mE_Grid...
            maxIterations tolerance 
 
@@ -36,15 +36,6 @@ function [mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out] = Discrete_VFI(r,
     % Allocate variables
     mVE_interp = NaN(size(mVW)) ;
     
-%% Transition for E
-    mE_Transition_aux = NaN(n_A,n_E,n_Z,n_A,n_E) ; 
-    for i_e = 1:n_E 
-    for i_ep = 1:n_E 
-        mE_Transition_aux(:,i_e,:,:,i_ep) = mE_Transition(i_e,i_ep) ;
-    end
-    end
-    
-    
 %% VFI 
     iter   = 0 ;
     V_Dist = 1 ;
@@ -68,8 +59,8 @@ function [mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out] = Discrete_VFI(r,
         mVE_p   = permute( repmat( mVE_max , [1,1,1,n_A,n_E] ) , [4,5,3,1,2] ) ; % dimension: A,E,Z,Ap,Ep
         
         % Expected value over Ep
-        E_V_W   = sum( mE_Transition_aux.*mVW_p , 5 );
-        E_V_E   = sum( mE_Transition_aux.*mVE_p , 5 );
+        E_V_W   = sum( mE_Transition_W_VFI.*mVW_p , 5 );
+        E_V_E   = sum( mE_Transition_E_VFI.*mVE_p , 5 );
         
         % Maximize over Ap
         mVW_new = max(  Utility(mC_W) + bbeta*ggamma*E_V_W , [] , 4 );

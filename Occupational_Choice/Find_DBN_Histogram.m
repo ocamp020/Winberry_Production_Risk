@@ -7,7 +7,7 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
 
 %% Initialization (global variables)
     global ggamma aalpha ddelta mmu llambda AA tau_n mKappa ...
-    	   mZ_Transition mE_Transition vZ_Grid vE_Grid  ...
+    	   mZ_Transition mE_Transition_W mE_Transition_E vZ_Grid vE_Grid  ...
            n_E n_Z n_A vA_Grid mA_Grid mZ_Grid n_State
 
 %% Declare prices
@@ -49,7 +49,8 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
     mA_Transition = sparse(mA_Transition) ;
     
     % Epsilon
-    mE_Transition_Histogram = kron( eye(2) , repmat( kron(mE_Transition,ones(n_A)) , [n_Z,n_Z] ) );
+    mE_Transition_Histogram = [ repmat( kron(mE_Transition_W,ones(n_A)) , [n_Z,n_Z] ) , zeros(n_State) ; 
+                                zeros(n_State) , repmat( kron(mE_Transition_E,ones(n_A)) , [n_Z,n_Z] ) ];
     mE_Transition_Histogram = sparse(mE_Transition_Histogram) ;
 
     % Z
@@ -125,7 +126,7 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
     
     % Residual
         residual = [r_new/r-1 ; p_new/p-1 ; w_new/w-1] ;
-        residual = sum(residual.^2) ;
+        residual = sqrt(sum(residual.^2)) ;
     
     %% Optional output
         if nargout>1

@@ -38,20 +38,23 @@ clear all; close all; clc;
 
 
 %% Graphs 
+
+    % Table with Composition
+        % Workers
+        W_share    = sum(sum(sum(mDBN_W))) ;
+        W_share_EZ = squeeze(sum(mDBN_W,1))/W_share ;
+        % Entrepreneurs
+        E_share    = sum(sum(sum(mDBN_E))) ;
+        E_share_EZ = squeeze(sum(mDBN_E,1))/E_share ;
+    
     figure; 
-    plot(vA_Grid,[sum(sum(mDBN_W,3),2)/sum(sum(sum(mDBN_W))),sum(sum(mDBN_E,3),2)/sum(sum(sum(mDBN_E)))])
+    plot(vA_Grid,[sum(sum(mDBN_W,3),2)/sum(sum(sum(mDBN_W))),sum(sum(mDBN_E,3),2)/sum(sum(sum(mDBN_E))),sum(sum(mDBN_W+mDBN_E,3),2)],'-o')
     xlabel('Wealth')
-    title('Wealth Distribution'); legend('Workers','Entrepreneurs','location','southoutside','orientation','horizontal')
+    title('Wealth Distribution'); legend('Workers','Entrepreneurs','All','location','southoutside','orientation','horizontal')
     set(gcf,'color','w')
     print('-depsc','SS_Distribution_Wealth.eps')
     
     
-    figure; 
-    plot(vA_Grid,[sum(sum(mDBN_W,3),2)/sum(sum(sum(mDBN_W))),sum(sum(mDBN_E,3),2)/sum(sum(sum(mDBN_E)))])
-    xlabel('Wealth')
-    title('Wealth Distribution'); legend('Workers','Entrepreneurs','location','southoutside','orientation','horizontal')
-    set(gcf,'color','w')
-    print('-depsc','SS_Distribution_Wealth.eps')
 
 
 

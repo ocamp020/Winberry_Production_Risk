@@ -19,6 +19,13 @@ mmu     = 0.80      ; % Substitution parameter for intermediate goods
 llambda = 1.50      ; % Financial constraint 
 AA      = 0.5       ; % TFP
 
+% Labor frictions
+b       = 0.1       ; % Unemployement benefits: Replacement rate
+jfr_W   = 0.35      ; % Job finding rate from unemployment
+jdr_W   = 0.04      ; % Job destruction rate
+jfr_E   = 0.35      ; % Job finding rate from unemployment
+jdr_E   = 0.04      ; % Job destruction rate
+
 % Taxes 
 tau_n = 0.2 ; % Payroll taxes
 tau_k = 0.2 ; % Capital income taxes
@@ -27,18 +34,19 @@ tau_k = 0.2 ; % Capital income taxes
 %% State Space
 global n_E n_Z n_A n_State ...
        vA_Grid mA_Grid A_Min A_Max Grid_Curvature ...
-       vE_Grid mE_Grid mE_Transition vE_Invariant aggEmployment ...
+       vE_Grid mE_Grid mE_Transition_W mE_Transition_E ...
+       mE_Transition_W_VFI mE_Transition_E_VFI ...
 	   vZ_Grid mZ_Grid mZ_Transition vZ_Invariant vKappa mKappa
 	
 % Order of approximation
-n_E     = 3   ; % number of gridpoints for labor productivity
+n_E     = 4   ; % number of gridpoints for labor productivity
 n_Z     = 5   ; % number of gridpoints for entrepreneurial productivity
-n_A     = 75  ; % number of gridpoints for assets
+n_A     = 100  ; % number of gridpoints for assets
 n_State = n_E * n_Z * n_A;
 
 % Bounds on grid space
 A_Min = aaBar;	
-A_Max = 100  ;
+A_Max = 50  ;
 Grid_Curvature = 3.0 ;
 vA_Grid = A_Min + linspace(0,1,n_A)'.^Grid_Curvature.*(A_Max-A_Min) ;
 
@@ -53,16 +61,36 @@ if n_E == 2
 elseif n_E == 3
     vE_Grid = [0.1 ; 1 ; 10] ;
     mE_Transition = [0.3  0.7  0.0;
-                          0.1  0.8  0.1;
-                          0.05 0.65 0.3];
+                     0.1  0.8  0.1;
+                     0.05 0.65 0.3];
+    mE_Transition_W = mE_Transition ;
+    mE_Transition_E = mE_Transition ;
 else
-    [vE_Grid,mE_Transition] = MarkovAR(n_E,3,0.9,0.03) ;
+    [vE_Grid,mE_Transition] = MarkovAR(n_E-1,3,0.9,0.03) ;
     vE_Grid = exp(vE_Grid) ;
+    vE_Grid = [b ; vE_Grid] ;
+    vE_Grid = [b ; 1 ; 5 ; 10 ] ;
+    mE_Transition_W = [1-jfr_W , jfr_W , zeros(1,n_E-2);
+                     jdr_W*ones(n_E-1,1) (1-jdr_W)*mE_Transition];
+    mE_Transition_E = [1-jfr_E , jfr_E , zeros(1,n_E-2);
+                     jdr_E*ones(n_E-1,1) (1-jdr_E)*mE_Transition];
 end 
-    [vE_Invariant,~]  = eig(mE_Transition') ;
-    vE_Invariant      = vE_Invariant(:,1)/sum(vE_Invariant(:,1)) ;
-
-    aggEmployment = vE_Grid'*vE_Invariant ;
+    [vE_Invariant_W,~]  = eig(mE_Transition_W') ;
+    vE_Invariant_W      = vE_Invariant_W(:,2)/sum(vE_Invariant_W(:,2)) ;
+    [vE_Invariant_E,~]  = eig(mE_Transition_E') ;
+    vE_Invariant_E      = vE_Invariant_E(:,2)/sum(vE_Invariant_E(:,2)) ;
+    
+    % Matrix for VFI
+    mE_Transition_W_VFI = NaN(n_A,n_E,n_Z,n_A,n_E) ; 
+    mE_Transition_E_VFI = NaN(n_A,n_E,n_Z,n_A,n_E) ; 
+    for i_e = 1:n_E 
+    for i_ep = 1:n_E 
+        mE_Transition_W_VFI(:,i_e,:,:,i_ep) = mE_Transition_W(i_e,i_ep) ;
+        mE_Transition_E_VFI(:,i_e,:,:,i_ep) = mE_Transition_E(i_e,i_ep) ;
+    end
+    end
+    
+    disp('vEGrid vEInvariant_W vE_Invariant_E'); disp([vE_Grid vE_Invariant_W vE_Invariant_E])
 
 % Entrepreneurial Productivity Types
 if n_Z == 2
