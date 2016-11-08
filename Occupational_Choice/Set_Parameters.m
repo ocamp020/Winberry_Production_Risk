@@ -9,7 +9,7 @@ global bbeta ggamma ssigma aaBar aalpha ddelta mmu llambda AA tau_n tau_k
 % Preferences
 bbeta   = 0.96      ; % discount factor (annual calibration)
 ggamma  = (1-1/40)  ; % Survival probability 
-ssigma  = 1         ; % coefficient of relative risk aversion
+ssigma  = 4         ; % coefficient of relative risk aversion
 aaBar   = 0.0001    ; % borrowing constraint
 
 % Technology
@@ -69,7 +69,7 @@ else
     [vE_Grid,mE_Transition] = MarkovAR(n_E-1,3,0.9,0.03) ;
     vE_Grid = exp(vE_Grid) ;
     vE_Grid = [b ; vE_Grid] ;
-    vE_Grid = [b ; 1 ; 5 ; 10 ] ;
+    vE_Grid = [b ; 1 ; 10 ; 20 ] ;
     mE_Transition_W = [1-jfr_W , jfr_W , zeros(1,n_E-2);
                      jdr_W*ones(n_E-1,1) (1-jdr_W)*mE_Transition];
     mE_Transition_E = [1-jfr_E , jfr_E , zeros(1,n_E-2);
