@@ -11,6 +11,7 @@ clear all; close all; clc;
 
     t0 = tic;
     x_0 = [0.01 0.23 0.34] ;
+    x_0 = [0.010008959812246   0.217382233344189   0.379041511277377];
 %     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
 %     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
     options = optimset('Display','iter','TolFun',1e-03);
@@ -164,12 +165,13 @@ clear all; close all; clc;
 
 %% Experiment 1: Change in household's borrowing constraint
 
-aaBar = -0.1 ;
+aaBar = -0.1*w_ss ;
 % Bounds on grid space
 A_Min = aaBar;	
 A_Max = 50  ;
 Grid_Curvature = 3.0 ;
 vA_Grid = A_Min + linspace(0,1,n_A)'.^Grid_Curvature.*(A_Max-A_Min) ;
+mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
 
 
 
@@ -201,17 +203,17 @@ vA_Grid = A_Min + linspace(0,1,n_A)'.^Grid_Curvature.*(A_Max-A_Min) ;
     
     
 
-    DBN_A   = sum(sum(mDBN_W+mDBN_E,3),2) ;
-    C_DBN_A = cumsum(DBN_A) ; 
+    DBN_A_exp   = sum(sum(mDBN_W_exp+mDBN_E_exp,3),2) ;
+    C_DBN_A = cumsum(DBN_A_exp) ; 
     pct_ind = knnsearch(C_DBN_A,[0.1 0.25 0.5 0.75 0.9 0.99]');
     pct_A   = vA_Grid(pct_ind) ;
     for i=1:numel(pct_ind)
-        top_shares(i) = sum(vA_Grid(pct_ind(i):end).*DBN_A(pct_ind(i):end))/(vA_Grid'*DBN_A) ;
+        top_shares_exp(i) = sum(vA_Grid(pct_ind(i):end).*DBN_A_exp(pct_ind(i):end))/(vA_Grid'*DBN_A_exp) ;
     end
     
     disp('Top Wealth Shares')
     disp(100*[0.1 0.25 0.5 0.75 0.9 0.99])
-    disp(100*top_shares)
+    disp(100*top_shares_exp)
 
     
     % Table with Composition
