@@ -7,23 +7,23 @@
 global bbeta ggamma ssigma aaBar aalpha ddelta mmu llambda AA tau_n tau_k
 	
 % Preferences
-bbeta   = 0.96      ; % discount factor (annual calibration)
+bbeta   = 0.98      ; % discount factor (annual calibration)
 ggamma  = (1-1/40)  ; % Survival probability 
-ssigma  = 4         ; % coefficient of relative risk aversion
+ssigma  = 1         ; % coefficient of relative risk aversion
 aaBar   = 0.0001    ; % borrowing constraint
 
 % Technology
 aalpha  = 0.36      ; % capital share
-ddelta  = 0.05      ; % depreciation rate (annual calibration)
+ddelta  = 0.025     ; % depreciation rate (annual calibration)
 mmu     = 0.80      ; % Substitution parameter for intermediate goods
 llambda = 1.50      ; % Financial constraint 
 AA      = 0.5       ; % TFP
 
 % Labor frictions
 b       = 0.1       ; % Unemployement benefits: Replacement rate
-jfr_W   = 0.35      ; % Job finding rate from unemployment
+jfr_W   = 0.30      ; % Job finding rate from unemployment
 jdr_W   = 0.04      ; % Job destruction rate
-jfr_E   = 0.35      ; % Job finding rate from unemployment
+jfr_E   = 0.30      ; % Job finding rate from unemployment
 jdr_E   = 0.04      ; % Job destruction rate
 
 % Taxes 
@@ -39,9 +39,9 @@ global n_E n_Z n_A n_State ...
 	   vZ_Grid mZ_Grid mZ_Transition vZ_Invariant vKappa mKappa
 	
 % Order of approximation
-n_E     = 4   ; % number of gridpoints for labor productivity
+n_E     = 3   ; % number of gridpoints for labor productivity
 n_Z     = 5   ; % number of gridpoints for entrepreneurial productivity
-n_A     = 100  ; % number of gridpoints for assets
+n_A     = 150  ; % number of gridpoints for assets
 n_State = n_E * n_Z * n_A;
 
 % Bounds on grid space
@@ -49,6 +49,7 @@ A_Min = aaBar;
 A_Max = 50  ;
 Grid_Curvature = 3.0 ;
 vA_Grid = A_Min + linspace(0,1,n_A)'.^Grid_Curvature.*(A_Max-A_Min) ;
+% figure; plot(vA_Grid,vA_Grid,'-o'); title('Asset Grid - Curvature');
 
 % Labor Productivity Shocks
 if n_E == 2 
@@ -59,14 +60,18 @@ if n_E == 2
                          1 - ((1 - aggEmployment) / aggEmployment) * (1 - (uDuration / (1 + uDuration)))];
     vE_Invariant = [1 - aggEmployment;aggEmployment];
 elseif n_E == 3
-    vE_Grid = [0.1 ; 1 ; 10] ;
-    mE_Transition = [0.3  0.7  0.0;
+    vE_Grid = [0.05 ; 0.9 ; 10] ;
+    mE_Transition = [0.1  0.8  0.1;
                      0.1  0.8  0.1;
                      0.05 0.65 0.3];
-    mE_Transition_W = mE_Transition ;
-    mE_Transition_E = mE_Transition ;
+    mE_Transition_W = [0.25  0.70 0.05;
+                       0.08  0.79 0.13;
+                       0.08  0.63 0.29];
+    mE_Transition_E = [0.40  0.55 0.05;
+                       0.08  0.81 0.11;
+                       0.07  0.67 0.26];
 else
-    [vE_Grid,mE_Transition] = MarkovAR(n_E-1,3,0.9,0.03) ;
+    [vE_Grid,mE_Transition] = MarkovAR(n_E-1,3,0.885,0.1) ;
     vE_Grid = exp(vE_Grid) ;
     vE_Grid = [b ; vE_Grid] ;
     vE_Grid = [b ; 1 ; 10 ; 20 ] ;
@@ -76,9 +81,9 @@ else
                      jdr_E*ones(n_E-1,1) (1-jdr_E)*mE_Transition];
 end 
     [vE_Invariant_W,~]  = eig(mE_Transition_W') ;
-    vE_Invariant_W      = vE_Invariant_W(:,2)/sum(vE_Invariant_W(:,2)) ;
+    vE_Invariant_W      = vE_Invariant_W(:,1)/sum(vE_Invariant_W(:,1)) ;
     [vE_Invariant_E,~]  = eig(mE_Transition_E') ;
-    vE_Invariant_E      = vE_Invariant_E(:,2)/sum(vE_Invariant_E(:,2)) ;
+    vE_Invariant_E      = vE_Invariant_E(:,1)/sum(vE_Invariant_E(:,1)) ;
     
     % Matrix for VFI
     mE_Transition_W_VFI = NaN(n_A,n_E,n_Z,n_A,n_E) ; 
@@ -98,7 +103,7 @@ if n_Z == 2
     mZ_Transition = [0.98 0.02;
                     0.95 0.05] ;
 else
-    [vZ_Grid,mZ_Transition] = MarkovAR(n_Z,4.5,0.5,0.11) ;
+    [vZ_Grid,mZ_Transition] = MarkovAR(n_Z,4.5,0.5,0.10) ;
     vZ_Grid = exp(vZ_Grid)' ;
 
     %vZGrid = [0 1.2 2.3] ;

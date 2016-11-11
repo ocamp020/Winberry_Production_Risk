@@ -127,6 +127,7 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
     % Residual
         residual = [r_new/r-1 ; p_new/p-1 ; w_new/w-1] ;
         residual = sqrt(sum(residual.^2)) ;
+        % residual = max(abs(residual)) ;
     
     %% Optional output
         if nargout>1
