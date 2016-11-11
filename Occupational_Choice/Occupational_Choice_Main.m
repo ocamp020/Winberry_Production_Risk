@@ -106,7 +106,9 @@ clear all; close all; clc;
             E_share_pct(i) = mass_E/mass_tot ; 
             low = high ;
         end 
-        figure; plot(pct_list,E_share_pct); title('Share of self-employed by earnings pct'); set(gcf,'color','w')
+        figure; plot(pct_list,E_share_pct); title('Share of self-employed by earnings pct'); 
+        set(gcf,'color','w')
+        print('-depsc','SS_SE_Rate_by_pct.eps')
 
     % Saving Functions
     figure;
@@ -147,18 +149,16 @@ clear all; close all; clc;
     Y_ss = AA*X_ss^(aalpha)*N_ss^(1-aalpha) ;   
     
     % Transitions
-        
-%% Graphs 
-
-
     
+    
+    % Distribution Graph
     figure; 
     plot(vA_Grid,[sum(sum(mDBN_W,3),2)/sum(sum(sum(mDBN_W))),sum(sum(mDBN_E,3),2)/sum(sum(sum(mDBN_E))),sum(sum(mDBN_W+mDBN_E,3),2)],'-')
     xlabel('Wealth')
     title('Wealth Distribution'); legend('Workers','Entrepreneurs','All','location','southoutside','orientation','horizontal')
     set(gcf,'color','w')
     print('-depsc','SS_Distribution_Wealth.eps')
-    
+
     
 
 
@@ -270,7 +270,9 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
             E_share_pct_exp(i) = mass_E/mass_tot ; 
             low = high ;
         end 
-        figure; plot(pct_list,E_share_pct_exp); title('Share of self-employed by earnings pct'); set(gcf,'color','w')
+        figure; plot(pct_list,E_share_pct_exp); title('Share of self-employed by earnings pct'); 
+        set(gcf,'color','w')
+        print('-depsc','SS_SE_Rate_by_pct_exp.eps')
 
     % Saving Functions
     figure;
@@ -319,8 +321,61 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
     set(gcf,'color','w')
     print('-depsc','SS_Distribution_Wealth_exp.eps')
     
+    % Welfare Gain by state
+    CE_W = 100*( (V_W_exp - V_W )/(1+bbeta*ggamma) - 1 ) ;
+    CE_E = 100*( (V_E_exp - V_E )/(1+bbeta*ggamma) - 1 ) ;
     
-    
+    % Average Welfare Gains
+        Av_CE   = sum(sum(sum( CE_W.*mDBN_W + CD_E.*mDBN_E ))) ;
+        Av_CE_W = sum(sum(sum( CE_W(:,2:n_E,:).*mDBN_W(:,2:n_E,:) ))) / sum(sum(sum( mDBN_W(:,2:n_E,:) ))) ;
+        Av_CE_U = sum(sum(sum( CE_W(:,1,:).*mDBN_W(:,1,:) ))) / sum(sum(sum( mDBN_W(:,1,:) ))) ;
+        Av_CE_E = sum(sum(sum( CE_E.*mDBN_E ))) / sum(sum(sum( mDBN_E ))) ;
+        
+    % Welfare Gain by Earning Percentile
+        CE_W_aux = CE_W(:,2:n_E,:) ;
+        CE_vec = [ CE_W_aux(:) ; CE_E(:) ] ;
+        % Earnings
+        Earnings_vec = [Earnings_W(:) ; Earnings_E(:) ] ;
+        [Earnings_vec,Earnings_ind] = sort(Earnings_vec) ;
+        % DBN_all
+        DBN_all_W    = mDBN_W(:,2:n_E,:) ; 
+        DBN_all_E    = mDBN_E ; 
+        DBN_all_vec  = [DBN_all_W(:) ; DBN_all_E(:)]  ;
+        DBN_all_vec  = DBN_all_vec(Earnings_ind)/sum(DBN_all_vec) ;
+        C_DBN_all_vec= cumsum(DBN_all_vec) ;
+        % Percentiles 
+        pct_list = [0.05:0.05:1]' ;
+        pct_ind = knnsearch(C_DBN_all_vec,pct_list);
+        CE_pct = NaN(numel(pct_list),1) ;
+        low = 0 ;
+        for i = 1:numel(pct_list)
+            high = Earnings_vec(pct_ind(i)) ;
+            ind = Earnings_vec>low & Earnings_vec<=high ;
+            mass_E   = sum( DBN_all_vec.*CE_vec.*ind ) ; 
+            mass_tot = sum( DBN_all_vec.*ind ) ;
+            CE_pct(i) = mass_E/mass_tot ; 
+            low = high ;
+        end 
+        figure; plot(pct_list,CE_pct); title('CE by earnings pct'); 
+        set(gcf,'color','w')
+        print('-depsc','SS_CE_by_pct.eps')
+
+        % Tables
+        Mat = [E_share          W_share-W_share_U        W_share_U     ;
+               E_share_exp   W_share_exp-W_share_U_exp   W_share_U_exp ];
+        Mat = 100*Mat ;
+        Mat = {'SE Share','W Share','U Share';num2cell(Mat)} ;
+        disp(Mat)
+        
+        
+        Mat = [X_exp/X_ss-1       N_exp/N_ss-1           Y_exp/Y_ss-1 ];
+        Mat = 100*Mat ;
+        Mat = {'X','N','Y';num2cell(Mat)} ;
+        disp(Mat)
+        
+        Mat = [Av_CE_E Av_CE_W Av_CE_U Av_CE];
+        Mat = {'CE - SE','CE - W','CE - U';num2cell(Mat)} ;
+        disp(Mat)
     
     
 %% Experiment 2: Change in labor taxes
