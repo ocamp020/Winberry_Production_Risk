@@ -165,6 +165,8 @@ clear all; close all; clc;
 
 %% Experiment 1: Change in household's borrowing constraint
 
+vA_Grid_old = vA_Grid ;
+
 aaBar = -0.1*w_ss ;
 % Bounds on grid space
 A_Min = aaBar;	
@@ -322,8 +324,17 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
     print('-depsc','SS_Distribution_Wealth_exp.eps')
     
     % Welfare Gain by state
-    CE_W = 100*( exp((V_W_exp - V_W )/(1+bbeta*ggamma)) - 1 ) ;
-    CE_E = 100*( exp((V_E_exp - V_E )/(1+bbeta*ggamma)) - 1 ) ;
+        % Approximate value functions
+        V_W_aux = NaN(n_A,n_E,n_Z);
+        V_E_aux = NaN(n_A,n_E,n_Z);
+        for i_z=1:n_Z
+        for i_e=1:n_E
+            V_W_aux = spline(vA_Grid,V_W_exp(:,i_e,i_z),vA_Grid_old) ;
+            V_E_aux = spline(vA_Grid,V_E_exp(:,i_e,i_z),vA_Grid_old) ;
+        end 
+        end
+    CE_W = 100*( exp((V_W_aux - V_W )/(1+bbeta*ggamma)) - 1 ) ;
+    CE_E = 100*( exp((V_E_aux - V_E )/(1+bbeta*ggamma)) - 1 ) ;
     
     % Average Welfare Gains
         Av_CE   = sum(sum(sum( CE_W.*mDBN_W + CE_E.*mDBN_E ))) ;
