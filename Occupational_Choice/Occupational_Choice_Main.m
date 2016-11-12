@@ -322,11 +322,11 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
     print('-depsc','SS_Distribution_Wealth_exp.eps')
     
     % Welfare Gain by state
-    CE_W = 100*( (V_W_exp - V_W )/(1+bbeta*ggamma) - 1 ) ;
-    CE_E = 100*( (V_E_exp - V_E )/(1+bbeta*ggamma) - 1 ) ;
+    CE_W = 100*( exp((V_W_exp - V_W )/(1+bbeta*ggamma)) - 1 ) ;
+    CE_E = 100*( exp((V_E_exp - V_E )/(1+bbeta*ggamma)) - 1 ) ;
     
     % Average Welfare Gains
-        Av_CE   = sum(sum(sum( CE_W.*mDBN_W + CD_E.*mDBN_E ))) ;
+        Av_CE   = sum(sum(sum( CE_W.*mDBN_W + CE_E.*mDBN_E ))) ;
         Av_CE_W = sum(sum(sum( CE_W(:,2:n_E,:).*mDBN_W(:,2:n_E,:) ))) / sum(sum(sum( mDBN_W(:,2:n_E,:) ))) ;
         Av_CE_U = sum(sum(sum( CE_W(:,1,:).*mDBN_W(:,1,:) ))) / sum(sum(sum( mDBN_W(:,1,:) ))) ;
         Av_CE_E = sum(sum(sum( CE_E.*mDBN_E ))) / sum(sum(sum( mDBN_E ))) ;
@@ -364,17 +364,17 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
         Mat = [E_share          W_share-W_share_U        W_share_U     ;
                E_share_exp   W_share_exp-W_share_U_exp   W_share_U_exp ];
         Mat = 100*Mat ;
-        Mat = {'SE Share','W Share','U Share';num2cell(Mat)} ;
+        Mat = [{'SE Share','W Share','U Share'};num2cell(Mat)] ;
         disp(Mat)
         
         
-        Mat = [X_exp/X_ss-1       N_exp/N_ss-1           Y_exp/Y_ss-1 ];
+        Mat = [X_exp/X_ss-1  N_exp/N_ss-1  Y_exp/Y_ss-1 (1+r_exp)/(1+r_ss)-1 p_exp/p_ss-1 w_exp/w_ss-1];
         Mat = 100*Mat ;
-        Mat = {'X','N','Y';num2cell(Mat)} ;
+        Mat = [{'X','N','Y','r','p','w'};num2cell(Mat)] ;
         disp(Mat)
         
         Mat = [Av_CE_E Av_CE_W Av_CE_U Av_CE];
-        Mat = {'CE - SE','CE - W','CE - U';num2cell(Mat)} ;
+        Mat = [{'CE - SE','CE - W','CE - U','CE - All'};num2cell(Mat)] ;
         disp(Mat)
     
     
