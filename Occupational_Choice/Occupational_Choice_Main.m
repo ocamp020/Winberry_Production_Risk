@@ -107,6 +107,55 @@ diary('Log_Occupational_Choice.txt')
     
 %% Experiment 2: Change in labor taxes
 
+    % Set back A Grid
+    vA_Grid = vA_Grid_ben ;
+    mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
+    
+    % Adjust Unemployment payment Grid
+    disp('Set unemployment earnings to 20% of wage (Originally 5%)')
+    vE_Grid(1) = 0.2 ;
+    mE_Grid = repmat(vE_Grid',[n_A 1 n_Z]);
+
+    % Solve the model
+    t0 = tic;
+    x_0 = x ;
+%     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
+%     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
+    options = optimset('Display','iter','TolFun',1e-03);
+    [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x),x_0,options);
+    fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
+
+    r_exp2 = x(1) ;
+    p_exp2 = x(2) ;
+    w_exp2 = x(3) ; 
+
+    Mat = [r_exp2 p_exp2 w_exp2] ; 
+    Mat = [{'Aggregate Prices',' ',' ';'Interest Rate','Int. Goods Price','Wage'};num2cell(Mat)];
+    disp(' '); disp(Mat); disp(' ');
+
+    Mat = (mmu*p_exp2*vZ_Grid.^mmu/(r_exp2+ddelta)).^(1/(1-mmu)) ; 
+    Mat = [{'Optimal Capital'} cell(1,n_Z-1);num2cell(Mat)];
+    disp(' '); disp(Mat); disp(' ');
+
+    % Get Distribution, Value and Policy Functions
+    [price_residual_exp2,mDBN_W_exp2,mDBN_E_exp2,mAp_W_exp2,mAp_E_exp2,OC_W_exp2,OC_E_exp2,V_W_exp2,V_E_exp2] = Find_DBN_Histogram(x) ;
+    disp('price residual'); disp(price_residual_exp2);
+    
+    
+    [A_exp2,X_exp2,N_exp2,Y_exp2,Earnings_W_exp2,Earnings_E_exp2] = ...
+        Graphs_Tables('exp2',r_exp2,p_exp2,w_exp2,mDBN_W_exp2,mDBN_E_exp2,mAp_W_exp2,mAp_E_exp2,OC_W_exp2,OC_E_exp2,V_W_exp2,V_E_exp2) ;
+    
+    % Aggregate variables difference
+    Mat = 100*[A_exp2/A_ben-1 X_exp2/X_ben-1  N_exp2/N_ben-1  Y_exp2/Y_ben-1];
+    Mat = [{'% Change'} cell(1,3);{'A','X','N','Y'};num2cell(Mat)] ;
+    disp(' '); disp(Mat); disp(' ');
+    
+    Mat = 100*[(1+r_exp2)/(1+r_ben)-1 p_exp2/p_ben-1 w_exp2/w_ben-1] ;
+    Mat = [{'% Change'} cell(1,2);{'Int. Rate','Int. Good Price','Wage'};num2cell(Mat)] ;
+    disp(' '); disp(Mat); disp(' ');
+
+    % Compute Welfare Gain
+    Welfare_Gain(mDBN_W,mDBN_E,V_W,V_E,mDBN_W_exp2,mDBN_E_exp2,V_W_exp2,V_E_exp2,Earnings_W_ben,Earnings_E_ben)
 
 
 %% 
