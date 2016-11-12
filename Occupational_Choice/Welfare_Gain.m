@@ -7,9 +7,9 @@ function [] = Welfare_Gain(mDBN_W,mDBN_E,V_W,V_E,mDBN_W_exp,mDBN_E_exp,V_W_exp,V
 global n_A n_E n_Z vA_Grid vA_Grid_ben bbeta ggamma
 
 
-    mDBN_W_exp(V_W_exp==-Inf) = 0 ; mDBN_W_exp = mDBN_W_exp/sum(mDBN_W_exp(:)) ;
+    mDBN_W_exp(V_W_exp==-Inf) = 0 ;
     V_W_exp(V_W_exp==-Inf) = 0 ;
-    mDBN_E_exp(V_E_exp==-Inf) = 0 ; mDBN_E_exp = mDBN_E_exp/sum(mDBN_E_exp(:)) ;
+    mDBN_E_exp(V_E_exp==-Inf) = 0 ; 
     V_E_exp(V_E_exp==-Inf) = 0 ;
 
 %% Welfare Gain by state
@@ -24,8 +24,8 @@ global n_A n_E n_Z vA_Grid vA_Grid_ben bbeta ggamma
         end
         
     % Compute Welfare Gain by state
-        CE_W = 100*( exp((V_W_aux - V_W )/(1-bbeta*ggamma)) - 1 ) ;
-        CE_E = 100*( exp((V_E_aux - V_E )/(1-bbeta*ggamma)) - 1 ) ;
+        CE_W = 100*( exp((V_W_aux - V_W )*(1-bbeta*ggamma)) - 1 ) ;
+        CE_E = 100*( exp((V_E_aux - V_E )*(1-bbeta*ggamma)) - 1 ) ;
 
     
 %% Average Welfare Gains
@@ -38,7 +38,15 @@ global n_A n_E n_Z vA_Grid vA_Grid_ben bbeta ggamma
     Mat = [{'CE - SE','CE - W','CE - U','CE - All'};num2cell(Mat)] ;
     disp(' '); disp('Welfare Gain by state of benchmark'); disp(Mat); disp(' ');
     
-        
+    Mat = squeeze(sum( CE_W.*mDBN_W + CE_E.*mDBN_E ,1))./squeeze(sum( mDBN_W + mDBN_E ,1)) ;
+    disp(' '); disp('Welfare Gain for All Agentes by EZ'); disp(Mat); disp(' ');
+ 
+    Mat = squeeze(sum( CE_W.*mDBN_W ,1))./squeeze(sum( mDBN_W ,1)) ;
+    disp(' '); disp('Welfare Gain for Workers by EZ'); disp(Mat); disp(' ');
+    
+    Mat = squeeze(sum( CE_E.*mDBN_E ,1))./squeeze(sum( mDBN_E ,1)) ;
+    disp(' '); disp('Welfare Gain for Self-Employed by EZ'); disp(Mat); disp(' ');
+    
 %% Welfare Gain of Average agent
     Av_V_W_exp = sum(sum(sum( V_W_exp(:,2:n_E,:).*mDBN_W_exp(:,2:n_E,:) ))) / sum(sum(sum(mDBN_W_exp(:,2:n_E,:)))) ;
     Av_V_W_ben = sum(sum(sum( V_W(:,2:n_E,:)    .*mDBN_W(:,2:n_E,:)     ))) / sum(sum(sum(mDBN_W(:,2:n_E,:))))     ;
@@ -52,10 +60,10 @@ global n_A n_E n_Z vA_Grid vA_Grid_ben bbeta ggamma
     Av_V_exp   = sum(sum(sum( V_W_exp.*mDBN_W_exp + V_E_exp.*mDBN_E_exp )))  ;
     Av_V_ben   = sum(sum(sum( V_W    .*mDBN_W     + V_E    .*mDBN_E     )))  ;
 
-    Av_CE2   = 100*(exp((Av_V_exp   - Av_V_ben  )/(1-bbeta*ggamma))-1) ;
-    Av_CE2_W = 100*(exp((Av_V_W_exp - Av_V_W_ben)/(1-bbeta*ggamma))-1) ;
-    Av_CE2_U = 100*(exp((Av_V_U_exp - Av_V_U_ben)/(1-bbeta*ggamma))-1) ;
-    Av_CE2_E = 100*(exp((Av_V_E_exp - Av_V_E_ben)/(1-bbeta*ggamma))-1) ;
+    Av_CE2   = 100*(exp((Av_V_exp   - Av_V_ben  )*(1-bbeta*ggamma))-1) ;
+    Av_CE2_W = 100*(exp((Av_V_W_exp - Av_V_W_ben)*(1-bbeta*ggamma))-1) ;
+    Av_CE2_U = 100*(exp((Av_V_U_exp - Av_V_U_ben)*(1-bbeta*ggamma))-1) ;
+    Av_CE2_E = 100*(exp((Av_V_E_exp - Av_V_E_ben)*(1-bbeta*ggamma))-1) ;
     
     Mat = [Av_CE2_E Av_CE2_W Av_CE2_U Av_CE2];
     Mat = [{'CE - SE','CE - W','CE - U','CE - All'};num2cell(Mat)] ;

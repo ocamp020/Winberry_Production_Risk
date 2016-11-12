@@ -3,6 +3,10 @@
 % Juan David Herreno & Sergio Ocampo (2016)
 
 clear all; close all; clc;
+
+delete('Log_Occupational_Choice.txt')
+diary('Log_Occupational_Choice.txt')
+
 %% Set up problem 
 
     Set_Parameters;
@@ -42,7 +46,11 @@ clear all; close all; clc;
 %% Experiment 1: Change in household's borrowing constraint
 
     % Set new borrowing limit
-    aaBar = -0.1*w_ben ;
+    aaBar = -w_ben ;
+    disp(' ')
+    disp('Changing borrowing constraint to:')
+    disp(-aaBar/w_ben);
+    disp(' ')
     
     % Adjust Grid
     A_Min = aaBar;	
@@ -101,3 +109,6 @@ clear all; close all; clc;
 
 
 
+%% 
+
+diary off
