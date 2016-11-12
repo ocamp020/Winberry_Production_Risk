@@ -329,18 +329,36 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
         V_E_aux = NaN(n_A,n_E,n_Z);
         for i_z=1:n_Z
         for i_e=1:n_E
-            V_W_aux = spline(vA_Grid,V_W_exp(:,i_e,i_z),vA_Grid_old) ;
-            V_E_aux = spline(vA_Grid,V_E_exp(:,i_e,i_z),vA_Grid_old) ;
+            V_W_aux(:,i_e,i_z) = interp1(vA_Grid,V_W_exp(:,i_e,i_z),vA_Grid_old) ;
+            V_E_aux(:,i_e,i_z) = interp1(vA_Grid,V_E_exp(:,i_e,i_z),vA_Grid_old) ;
         end 
         end
-    CE_W = 100*( exp((V_W_aux - V_W )/(1+bbeta*ggamma)) - 1 ) ;
-    CE_E = 100*( exp((V_E_aux - V_E )/(1+bbeta*ggamma)) - 1 ) ;
+    CE_W = 100*( exp((V_W_aux - V_W )/(1-bbeta*ggamma)) - 1 ) ;
+    CE_E = 100*( exp((V_E_aux - V_E )/(1-bbeta*ggamma)) - 1 ) ;
+    CE_W(mDBN_W<=1e-5) = 0 ;
+    CE_E(mDBN_E<=1e-5) = 0 ;
+    
     
     % Average Welfare Gains
         Av_CE   = sum(sum(sum( CE_W.*mDBN_W + CE_E.*mDBN_E ))) ;
         Av_CE_W = sum(sum(sum( CE_W(:,2:n_E,:).*mDBN_W(:,2:n_E,:) ))) / sum(sum(sum( mDBN_W(:,2:n_E,:) ))) ;
         Av_CE_U = sum(sum(sum( CE_W(:,1,:).*mDBN_W(:,1,:) ))) / sum(sum(sum( mDBN_W(:,1,:) ))) ;
         Av_CE_E = sum(sum(sum( CE_E.*mDBN_E ))) / sum(sum(sum( mDBN_E ))) ;
+        
+        mDBN_E_exp(V_E_exp==-Inf) = 0;
+        V_E_exp(V_E_exp==-Inf) = 0 ;
+        
+        mDBN_E_exp = mDBN_E_exp/sum(mDBN_E_exp(:)) ;
+        V_E_exp(mDBN_E_exp<1e-4) = 0 ;
+        V_E_exp(V_E_exp==-Inf)= 0 ; 
+        
+        Av_V_W_exp = sum(sum(sum( V_W_exp.*mDBN_W_exp ))) / sum(sum(sum(mDBN_W_exp))) ;
+        Av_V_W     = sum(sum(sum( V_W    .*mDBN_W     ))) / sum(sum(sum(mDBN_W))) ;
+        
+        Av_CE2   = 100*(exp((sum(sum(sum(V_W_exp.*mDBN_W_exp + V_E_exp.*mDBN_E_exp)))-sum(sum(sum(V_W.*mDBN_W + V_E.*mDBN_E))))/(1-bbeta*ggamma) )-1) ;
+        Av_CE2_W = sum(sum(sum( CE_W(:,2:n_E,:).*mDBN_W(:,2:n_E,:) ))) / sum(sum(sum( mDBN_W(:,2:n_E,:) ))) ;
+        Av_CE2_U = sum(sum(sum( CE_W(:,1,:).*mDBN_W(:,1,:) ))) / sum(sum(sum( mDBN_W(:,1,:) ))) ;
+        Av_CE2_E = sum(sum(sum( CE_E.*mDBN_E ))) / sum(sum(sum( mDBN_E ))) ;
         
     % Welfare Gain by Earning Percentile
         CE_W_aux = CE_W(:,2:n_E,:) ;
