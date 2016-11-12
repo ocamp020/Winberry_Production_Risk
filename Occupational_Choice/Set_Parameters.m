@@ -33,7 +33,7 @@ tau_k = 0.2 ; % Capital income taxes
 
 %% State Space
 global n_E n_Z n_A n_State ...
-       vA_Grid mA_Grid A_Min A_Max Grid_Curvature ...
+       vA_Grid mA_Grid A_Min A_Max Grid_Curvature vA_Grid_ben ...
        vE_Grid mE_Grid mE_Transition_W mE_Transition_E ...
        mE_Transition_W_VFI mE_Transition_E_VFI ...
 	   vZ_Grid mZ_Grid mZ_Transition vZ_Invariant vKappa mKappa
@@ -49,6 +49,7 @@ A_Min = aaBar;
 A_Max = 50  ;
 Grid_Curvature = 3.0 ;
 vA_Grid = A_Min + linspace(0,1,n_A)'.^Grid_Curvature.*(A_Max-A_Min) ;
+vA_Grid_ben = vA_Grid ;
 % figure; plot(vA_Grid,vA_Grid,'-o'); title('Asset Grid - Curvature');
 
 % Labor Productivity Shocks

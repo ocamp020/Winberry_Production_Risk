@@ -21,7 +21,7 @@ function [mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out] = Discrete_VFI(r,
     mAp_aux = permute(mA_aux,[4,2,3,1])     ;
       
     % Firm's capital demand and profits
-    K       = min( llambda*mA_aux , (mmu*p*mZ_aux.^mmu/(r+ddelta)).^(1/(1-mmu)) )  ;
+    K       = min( max( 0 , llambda*mA_aux ) , (mmu*p*mZ_aux.^mmu/(r+ddelta)).^(1/(1-mmu)) )  ;
     Pr      = p*(mZ_aux.*K).^mmu - (r+ddelta)*K ;
 
     % Consumption
