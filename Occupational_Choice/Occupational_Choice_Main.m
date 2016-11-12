@@ -88,7 +88,7 @@ clear all; close all; clc;
     disp(' '); disp(Mat); disp(' ');
     
     Mat = 100*[(1+r_exp)/(1+r_ben)-1 p_exp/p_ben-1 w_exp/w_ben-1] ;
-    Mat = [{'% Change'} cell(1,3);{'Int. Rate','Int. Good Price','Wage'};num2cell(Mat)] ;
+    Mat = [{'% Change'} cell(1,2);{'Int. Rate','Int. Good Price','Wage'};num2cell(Mat)] ;
     disp(' '); disp(Mat); disp(' ');
 
     % Compute Welfare Gain

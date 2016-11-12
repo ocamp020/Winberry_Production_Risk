@@ -4,8 +4,8 @@
 
 function [A_ss,X_ss,N_ss,Y_ss,Earnings_W,Earnings_E] = Graphs_Tables(model,r,p,w,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E)
 
-global mmu ddelta llambda tau_k...
-       n_A n_E n_Z vA_Grid mA_Grid mZ_Grid mE_Grid
+global mmu ddelta llambda tau_k AA aalpha...
+       n_A n_E n_Z vA_Grid vE_Grid mA_Grid mZ_Grid mE_Grid
 
 %% Capital and Profits and Earnings
 
@@ -29,7 +29,7 @@ global mmu ddelta llambda tau_k...
     % Value Functions
         figure; 
         for i_z=1:n_Z
-            subplot(1,3,i_z); plot(vA_Grid,V_W(:,:,i_z),'linewidth',2); title('V_W');
+            subplot(2,3,i_z); plot(vA_Grid,V_W(:,:,i_z),'linewidth',2); title('V_W');
             xlim([min(vA_Grid) max(vA_Grid)])
         end 
         set(gcf,'color','w')
@@ -40,7 +40,7 @@ global mmu ddelta llambda tau_k...
 
         figure; 
         for i_z=1:n_Z
-            subplot(1,3,i_z); plot(vA_Grid,V_E(:,:,i_z),'linewidth',2); title('V_E');
+            subplot(2,3,i_z); plot(vA_Grid,V_E(:,:,i_z),'linewidth',2); title('V_E');
             xlim([min(vA_Grid) max(vA_Grid)])
         end 
         set(gcf,'color','w')
@@ -74,7 +74,7 @@ global mmu ddelta llambda tau_k...
         for i_e = 1:n_E
         for i_z = 1:n_Z
             subplot(n_E,n_Z,i_plot); hold on; 
-            plot(vA_Grid,vA_Grid(mAp_E(:,i_e,i_z)))
+            plot(vA_Grid,vA_Grid(mAp_E(:,i_e,i_z)),'linewidth',2)
             plot(vA_Grid,vA_Grid,':')
             hold off; xlim([min(vA_Grid) max(vA_Grid)])
             %title('Saving E')
@@ -93,7 +93,7 @@ global mmu ddelta llambda tau_k...
         for i_e = 1:n_E
         for i_z = 1:n_Z
             subplot(n_E,n_Z,i_plot);
-            plot(vA_Grid,vA_Grid(OC_W(:,i_e,i_z)),'linewidth',2)
+            plot(vA_Grid,OC_W(:,i_e,i_z),'linewidth',2)
             xlim([min(vA_Grid) max(vA_Grid)]); ylim([-1,2]);
             %title('OC W')
             i_plot = i_plot +1 ;
@@ -110,7 +110,7 @@ global mmu ddelta llambda tau_k...
         for i_e = 1:n_E
         for i_z = 1:n_Z
             subplot(n_E,n_Z,i_plot);
-            plot(vA_Grid,vA_Grid(OC_E(:,i_e,i_z)))
+            plot(vA_Grid,OC_E(:,i_e,i_z),'linewidth',2)
             xlim([min(vA_Grid) max(vA_Grid)]); ylim([-1,2]);
             %title('OC E')
             i_plot = i_plot +1 ;
@@ -176,9 +176,9 @@ global mmu ddelta llambda tau_k...
     end
     
     Mat = 100*top_shares ; 
-    Mat = [{'Top Wealth Shares'} cell(1,numel(pct_ind)-1);
-           {'pct'},num2cell(100*[0.1 0.25 0.5 0.75 0.9 0.99];
-           num2cell(Mat)];
+    Mat = [{'Top Wealth Shares'} cell(1,numel(pct_ind));
+           {'pct'},num2cell(100*[0.1 0.25 0.5 0.75 0.9 0.99]);
+           {'Share'},num2cell(Mat)];
     disp(' '); disp(Mat); disp(' ');
 
 %% Earnings
@@ -233,7 +233,7 @@ global mmu ddelta llambda tau_k...
 %% Aggregates
 
     A_ss = vA_Grid'*sum(sum(mDBN_W+mDBN_E,3),2) ;
-    K_ss = min( 0 , llambda*mA_Grid , (mmu*p*mZ_Grid.^mmu/(r+ddelta)).^(1/(1-mmu)) )  ;
+    K_ss = min( max( 0 , llambda*mA_Grid ) , (mmu*p*mZ_Grid.^mmu/(r+ddelta)).^(1/(1-mmu)) )  ;
     X_ss = sum(sum(sum( (mZ_Grid.*K_ss).^mmu .* mDBN_E ))).^(1/mmu) ;
     N_ss = sum( vE_Grid.*squeeze(sum(sum(mDBN_W,3),1))' ) ;
     Y_ss = AA*X_ss^(aalpha)*N_ss^(1-aalpha) ;   

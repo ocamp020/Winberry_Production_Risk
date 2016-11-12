@@ -89,8 +89,8 @@ global n_A n_E n_Z vA_Grid vA_Grid_ben bbeta ggamma
     end 
     figure; plot(pct_list,CE_pct); title('CE by earnings pct'); 
     set(gcf,'color','w')
-    file_name_eps = ['CE_by_pct_',model,'.eps'] ;
-    file_name_fig = ['CE_by_pct_',model,'.fig'] ;
+    file_name_eps = ['CE_by_pct.eps'] ;
+    file_name_fig = ['CE_by_pct.fig'] ;
     print('-depsc',file_name_eps)
     savefig(file_name_fig)
 
