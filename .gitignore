@@ -4,6 +4,5 @@
 *.pdf
 *.xls
 *.zip
-*.fig
 *.lyx
 .DS*

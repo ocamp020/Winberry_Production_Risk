@@ -109,6 +109,7 @@ clear all; close all; clc;
         figure; plot(pct_list,E_share_pct); title('Share of self-employed by earnings pct'); 
         set(gcf,'color','w')
         print('-depsc','SS_SE_Rate_by_pct.eps')
+        savefig('SS_SE_Rate_by_pct.fig')
 
     % Saving Functions
     figure;
@@ -158,6 +159,7 @@ clear all; close all; clc;
     title('Wealth Distribution'); legend('Workers','Entrepreneurs','All','location','southoutside','orientation','horizontal')
     set(gcf,'color','w')
     print('-depsc','SS_Distribution_Wealth.eps')
+    savefig('SS_Distribution_Wealth.fig')
 
     
 
@@ -275,6 +277,7 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
         figure; plot(pct_list,E_share_pct_exp); title('Share of self-employed by earnings pct'); 
         set(gcf,'color','w')
         print('-depsc','SS_SE_Rate_by_pct_exp.eps')
+        savefig('SS_SE_Rate_by_pct_exp.fig')
 
     % Saving Functions
     figure;
@@ -322,6 +325,7 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
     title('Wealth Distribution'); legend('Workers','Entrepreneurs','All','location','southoutside','orientation','horizontal')
     set(gcf,'color','w')
     print('-depsc','SS_Distribution_Wealth_exp.eps')
+    savefig('SS_Distribution_Wealth_exp.fig')
     
     % Welfare Gain by state
         % Approximate value functions
@@ -349,7 +353,7 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
         V_E_exp(V_E_exp==-Inf) = 0 ;
         
         mDBN_E_exp = mDBN_E_exp/sum(mDBN_E_exp(:)) ;
-        V_E_exp(mDBN_E_exp<1e-4) = 0 ;
+        %V_E_exp(mDBN_E_exp<1e-4) = 0 ;
         V_E_exp(V_E_exp==-Inf)= 0 ; 
         
         Av_V_W_exp = sum(sum(sum( V_W_exp.*mDBN_W_exp ))) / sum(sum(sum(mDBN_W_exp))) ;
@@ -388,6 +392,7 @@ mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
         figure; plot(pct_list,CE_pct); title('CE by earnings pct'); 
         set(gcf,'color','w')
         print('-depsc','SS_CE_by_pct.eps')
+        savefig('SS_CE_by_pct.fig')
 
         % Tables
         Mat = [E_share          W_share-W_share_U        W_share_U     ;
