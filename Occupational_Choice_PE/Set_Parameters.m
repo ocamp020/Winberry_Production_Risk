@@ -64,14 +64,14 @@ if n_E == 2
                          1 - ((1 - aggEmployment) / aggEmployment) * (1 - (uDuration / (1 + uDuration)))];
     vE_Invariant = [1 - aggEmployment;aggEmployment];
 elseif n_E == 3
-    vE_Grid = [0.05 ; 0.9 ; 10] ;
+    vE_Grid = [0.02 ; 1 ; 10] ;
     mE_Transition = [0.1  0.8  0.1;
                      0.1  0.8  0.1;
                      0.05 0.65 0.3];
-    mE_Transition_W = [0.25  0.70 0.05;
-                       0.08  0.79 0.13;
-                       0.08  0.63 0.29];
-    mE_Transition_E = [0.40  0.55 0.05;
+    mE_Transition_W = [0.27  0.68 0.05;
+                       0.17  0.75 0.08;
+                       0.15  0.60 0.25];
+    mE_Transition_E = [0.42  0.55 0.03;
                        0.08  0.81 0.11;
                        0.07  0.67 0.26];
 else
@@ -107,7 +107,7 @@ if n_Z == 2
     mZ_Transition = [0.98 0.02;
                     0.95 0.05] ;
 else
-    [vZ_Grid,mZ_Transition] = MarkovAR(n_Z,4.5,0.5,0.10) ;
+    [vZ_Grid,mZ_Transition] = MarkovAR(n_Z,4.5,0.5,0.07) ;
     vZ_Grid = exp(vZ_Grid)' ;
 
     %vZGrid = [0 1.2 2.3] ;
