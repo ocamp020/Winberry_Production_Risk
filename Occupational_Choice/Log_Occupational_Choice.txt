@@ -38,7 +38,7 @@ Optimization terminated:
  the current x satisfies the termination criteria using OPTIONS.TolX of 1.000000e-04 
  and F(X) satisfies the convergence criteria using OPTIONS.TolFun of 1.000000e-03 
 
-Done! Time to compute: 337.02 seconds, error=7.93e-04 
+Done! Time to compute: 331.51 seconds, error=7.93e-04 
 
  
     'Aggregate Prices'    ' '                   ' '     
@@ -134,7 +134,7 @@ Optimization terminated:
  the current x satisfies the termination criteria using OPTIONS.TolX of 1.000000e-04 
  and F(X) satisfies the convergence criteria using OPTIONS.TolFun of 1.000000e-03 
 
-Done! Time to compute: 441.61 seconds, error=5.35e-03 
+Done! Time to compute: 442.31 seconds, error=5.35e-03 
 
  
     'Aggregate Prices'    ' '                   ' '     
@@ -232,5 +232,138 @@ Welfare Gain for Self-Employed by EZ
 Welfare Gain by Averages
     'CE - SE'    'CE - W'     'CE - U'    'CE - All'
     [ 0.2668]    [-1.5356]    [0.1115]    [ -1.2300]
+
+ 
+Set unemployment earnings to 20% of wage (Originally 5%)
+ 
+ Iteration   Func-count     min f(x)         Procedure
+     0            1        0.0650291         
+     1            4        0.0650291         initial simplex
+     2            6        0.0650291         contract outside
+     3            8        0.0650291         contract inside
+     4           10        0.0650291         contract inside
+     5           12        0.0370239         contract inside
+     6           14        0.0244402         contract inside
+     7           15        0.0244402         reflect
+     8           17        0.0244402         contract inside
+     9           19        0.0118531         reflect
+    10           20        0.0118531         reflect
+    11           22       0.00874903         contract inside
+    12           24       0.00874903         contract inside
+    13           29       0.00874903         shrink
+    14           31       0.00699731         contract outside
+    15           33       0.00699731         contract inside
+    16           35       0.00699731         contract outside
+    17           40       0.00699731         shrink
+    18           42       0.00682583         reflect
+    19           44        0.0066451         reflect
+    20           49        0.0066451         shrink
+    21           51        0.0066451         contract outside
+    22           53        0.0066451         contract inside
+    23           55       0.00657019         reflect
+    24           57       0.00657019         contract inside
+ 
+Optimization terminated:
+ the current x satisfies the termination criteria using OPTIONS.TolX of 1.000000e-04 
+ and F(X) satisfies the convergence criteria using OPTIONS.TolFun of 1.000000e-03 
+
+Done! Time to compute: 360.38 seconds, error=6.57e-03 
+
+ 
+    'Aggregate Prices'    ' '                   ' '     
+    'Interest Rate'       'Int. Goods Price'    'Wage'  
+    [          0.0106]    [          0.2188]    [0.3783]
+
+ 
+ 
+    'Optimal Capital'              []              []              []              []
+    [       361.6948]    [1.0225e+03]    [2.8907e+03]    [8.1722e+03]    [2.3103e+04]
+
+ 
+price residual
+    0.0066
+
+ 
+    'Agent Composition'    ' '                ' '         
+    'Workers'              'Self-Employed'    'Unemployed'
+    [          68.3625]    [      27.9371]    [    3.6892]
+
+ 
+ 
+    'Self-Employed by EZ'           []           []           []           []
+    [            81.9751]    [46.8269]    [52.4984]    [52.1501]    [73.5460]
+    [            18.6587]    [24.0437]    [37.6632]    [44.0762]    [68.9866]
+    [                  0]    [      0]    [      0]    [ 1.4697]    [40.9542]
+
+ 
+ 
+    'Composition Workers'           []          []          []              []
+    [             4.1658]    [ 0.8046]    [0.1466]    [0.0032]    [3.5292e-06]
+    [            64.3374]    [10.4113]    [1.4535]    [0.0273]    [2.8491e-05]
+    [            15.2001]    [ 2.9195]    [0.5201]    [0.0105]    [1.0271e-05]
+
+ 
+ 
+    'Composition Self-…'           []          []              []              []
+    [            48.8624]    [1.8275]    [0.4178]    [    0.0090]    [2.5305e-05]
+    [            38.0625]    [8.4998]    [2.2649]    [    0.0555]    [1.6345e-04]
+    [                  0]    [     0]    [     0]    [4.0333e-04]    [1.8374e-05]
+
+ 
+ 
+    'Top Wealth Shares'           []           []           []           []           []          []
+    'pct'                  [     10]    [     25]    [     50]    [     75]    [     90]    [    99]
+    'Share'                [99.8954]    [98.8389]    [88.6327]    [62.2390]    [35.0621]    [5.6243]
+
+ 
+ 
+    'Aggregate Variables'    ' '             ' '         ' '     
+    'Assets'                 'Int. Goods'    'Labor'     'Output'
+    [             4.0412]    [    1.5543]    [1.8455]    [0.8674]
+
+ 
+ 
+    '% Change'           []          []           []
+    'A'           'X'          'N'         'Y'      
+    [ -1.6219]    [-1.3313]    [0.4184]    [-0.2151]
+
+ 
+ 
+    '% Change'                    []           []
+    'Int. Rate'    'Int. Good Price'    'Wage'   
+    [   0.0462]    [         0.6437]    [-0.0876]
+
+ 
+ 
+Welfare Gain by state of benchmark
+    'CE - SE'    'CE - W'    'CE - U'    'CE - All'
+    [ 0.6859]    [1.1410]    [4.5436]    [  1.1091]
+
+ 
+ 
+Welfare Gain for All Agentes by EZ
+    1.3285    2.8138    2.5061    2.6774    1.8303
+    1.1163    1.2347    1.1033    1.2311    1.0687
+    0.5671    0.5867    0.5715    0.7108    0.7792
+
+ 
+ 
+Welfare Gain for Workers by EZ
+    4.3845    5.2595    5.1231    5.3814    5.6494
+    1.2525    1.4523    1.4264    1.6614    1.8046
+    0.5671    0.5867    0.5715    0.7111    0.8305
+
+ 
+ 
+Welfare Gain for Self-Employed by EZ
+    0.8264    0.6808    0.6609    0.7729    0.7736
+    0.5175    0.6062    0.6235    0.7673    0.7653
+       NaN       NaN       NaN    0.6819    0.6890
+
+ 
+ 
+Welfare Gain by Averages
+    'CE - SE'    'CE - W'    'CE - U'    'CE - All'
+    [ 1.7544]    [0.6982]    [6.2610]    [  0.7671]
 
  
