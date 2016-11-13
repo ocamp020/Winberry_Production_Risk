@@ -64,14 +64,14 @@ if n_E == 2
                          1 - ((1 - aggEmployment) / aggEmployment) * (1 - (uDuration / (1 + uDuration)))];
     vE_Invariant = [1 - aggEmployment;aggEmployment];
 elseif n_E == 3
-    vE_Grid = [0.02 ; 1 ; 10] ;
+    vE_Grid = [0.01 ; 1 ; 10] ;
     mE_Transition = [0.1  0.8  0.1;
                      0.1  0.8  0.1;
                      0.05 0.65 0.3];
     mE_Transition_W = [0.27  0.68 0.05;
-                       0.17  0.75 0.08;
+                       0.20  0.73 0.07;
                        0.15  0.60 0.25];
-    mE_Transition_E = [0.42  0.55 0.03;
+    mE_Transition_E = [0.40  0.55 0.05;
                        0.08  0.81 0.11;
                        0.07  0.67 0.26];
 else
