@@ -1,7 +1,7 @@
 vEGrid vEInvariant_W vE_Invariant_E
-    0.0100    0.2107    0.1159
-    1.0000    0.7090    0.7629
-   10.0000    0.0802    0.1212
+    0.0100    0.1529    0.1159
+    1.0000    0.7485    0.7629
+   10.0000    0.0986    0.1212
 
 vZGrid vZInvariant
     0.6951    0.0008
@@ -12,93 +12,84 @@ vZGrid vZInvariant
 
  
  Iteration   Func-count     min f(x)         Procedure
-     0            1          0.19978         
-     1            3          0.19978         initial simplex
-     2            5          0.19978         contract outside
-     3            7          0.19978         contract inside
-     4            8          0.19978         reflect
-     5           10          0.19978         contract inside
-     6           12          0.18247         contract inside
-     7           14         0.170682         contract outside
-     8           16         0.170682         contract inside
-     9           18         0.143769         expand
-    10           19         0.143769         reflect
-    11           21        0.0804854         expand
-    12           23        0.0804854         contract inside
-    13           25        0.0708963         reflect
-    14           27        0.0229542         reflect
-    15           28        0.0229542         reflect
-    16           30        0.0229542         contract inside
-    17           32        0.0229542         contract outside
-    18           34        0.0229542         contract inside
-    19           35        0.0229542         reflect
-    20           36        0.0229542         reflect
-    21           38        0.0101891         contract inside
-    22           40       0.00436436         contract inside
-    23           42       0.00436436         contract outside
-    24           44       0.00436436         contract inside
-    25           46       0.00414726         contract inside
-    26           48       0.00271465         reflect
-    27           49       0.00271465         reflect
-    28           53       0.00271465         shrink
-    29           55       0.00271465         contract inside
-    30           57       0.00271465         contract outside
-    31           59       0.00251658         reflect
-    32           61       0.00251658         contract inside
+     0            1        0.0125576         
+     1            3        0.0125576         initial simplex
+     2            5        0.0125576         contract outside
+     3            7        0.0125576         contract inside
+     4            8        0.0125576         reflect
+     5           10        0.0125576         contract inside
+     6           12        0.0125576         contract inside
+     7           14        0.0125576         contract inside
+     8           16        0.0125576         contract inside
+     9           18        0.0125576         contract inside
+    10           20        0.0125576         contract inside
+    11           21        0.0125576         reflect
+    12           23       0.00719058         reflect
+    13           25       0.00719058         contract inside
+    14           27       0.00719058         contract inside
+    15           31       0.00719058         shrink
+    16           33       0.00641522         reflect
+    17           35       0.00641522         contract outside
+    18           39       0.00641522         shrink
+    19           41       0.00641522         contract outside
+    20           45       0.00641522         shrink
+    21           47       0.00641522         contract inside
+    22           49       0.00635931         reflect
+    23           51       0.00635931         contract inside
  
 Optimization terminated:
  the current x satisfies the termination criteria using OPTIONS.TolX of 1.000000e-04 
  and F(X) satisfies the convergence criteria using OPTIONS.TolFun of 1.000000e-03 
 
-Done! Time to compute: 306.44 seconds, error=2.52e-03 
+Done! Time to compute: 248.49 seconds, error=6.36e-03 
 
  
     'Aggregate Prices'    ' '                   ' '     
     'Interest Rate'       'Int. Goods Price'    'Wage'  
-    [          0.0500]    [          0.2007]    [0.3083]
+    [          0.0500]    [          0.2097]    [0.3032]
 
  
  
-    'Optimal Capital'           []           []           []            []
-    [        10.5055]    [21.7445]    [45.0073]    [93.1570]    [192.8181]
+    'Optimal Capital'           []           []            []            []
+    [        13.0643]    [27.0407]    [55.9693]    [115.8463]    [239.7810]
 
  
 price residual
-    0.0025
+    0.0064
 
  
     'Agent Composition'    ' '                ' '         
     'Workers'              'Self-Employed'    'Unemployed'
-    [          64.4407]    [      32.6128]    [    2.9465]
+    [          69.4488]    [      27.8000]    [    2.7512]
 
  
  
     'Self-Employed by EZ'           []           []           []           []
-    [            88.5984]    [84.3131]    [95.4273]    [99.3331]    [99.8775]
-    [            11.2429]    [50.1477]    [73.3275]    [88.5754]    [96.5936]
+    [            88.2358]    [61.1407]    [74.1470]    [89.5219]    [98.2598]
+    [            10.2925]    [42.4442]    [59.9693]    [73.8070]    [87.2658]
     [                  0]    [      0]    [      0]    [      0]    [      0]
 
  
  
     'Composition Workers'          []          []              []              []
-    [             4.1931]    [0.1698]    [0.0096]    [2.5948e-05]    [5.8695e-09]
-    [            79.1848]    [3.6193]    [0.3641]    [    0.0030]    [1.0448e-06]
-    [            10.9756]    [1.2293]    [0.2465]    [    0.0048]    [5.6074e-06]
+    [             3.2574]    [0.4928]    [0.0600]    [4.0464e-04]    [7.5952e-08]
+    [            77.4467]    [4.5014]    [0.5976]    [    0.0075]    [3.8801e-06]
+    [            11.8799]    [1.4622]    [0.2887]    [    0.0055]    [5.9931e-06]
 
  
  
     'Composition Self-…'           []          []          []              []
-    [            67.3271]    [1.8857]    [0.4137]    [0.0080]    [9.8890e-06]
-    [            20.7257]    [7.5229]    [2.0683]    [0.0486]    [6.1221e-05]
+    [            63.4519]    [2.0136]    [0.4469]    [0.0090]    [1.1138e-05]
+    [            23.0774]    [8.6211]    [2.3251]    [0.0550]    [6.9057e-05]
     [                  0]    [     0]    [     0]    [     0]    [         0]
 
  
  
 Transitions
     ' '    'Up'         'Wp'         'Ep'     
-    'U'    [26.9910]    [     73]    [ 0.0090]
-    'W'    [ 2.4086]    [76.7468]    [20.8447]
-    'E'    [ 1.8372]    [39.3514]    [58.8114]
+    'U'    [24.9720]    [75.0000]    [ 0.0280]
+    'W'    [ 2.4746]    [82.2875]    [15.2379]
+    'E'    [ 1.2430]    [36.8265]    [61.9305]
 
  
  
@@ -106,19 +97,19 @@ Transitions
 
     'Top Wealth Shares'           []           []           []           []           []
     'pct'                  [     10]    [     25]    [     50]    [     75]    [     90]
-    'Share'                [99.5846]    [96.9534]    [85.4163]    [58.6878]    [32.6269]
+    'Share'                [99.4521]    [96.6372]    [83.4362]    [57.3217]    [28.7923]
 
   Column 7
 
           []
     [    99]
-    [5.2705]
+    [4.6953]
 
  
  
     'Aggregate Variables'    ' '             ' '         ' '     
     'Assets'                 'Int. Goods'    'Labor'     'Output'
-    [             4.2720]    [    1.2693]    [1.3999]    [0.6757]
+    [             5.1518]    [    1.3828]    [1.5806]    [0.7531]
 
  
  
@@ -128,80 +119,81 @@ Changing borrowing constraint to:
  
  
  Iteration   Func-count     min f(x)         Procedure
-     0            1         0.039188         
-     1            3         0.039188         initial simplex
-     2            5         0.039188         contract outside
-     3            7         0.039188         contract inside
-     4            9         0.039188         contract outside
-     5           11         0.039188         contract inside
-     6           13         0.039188         contract inside
-     7           15         0.039188         contract inside
-     8           17        0.0193701         contract inside
-     9           19        0.0147115         reflect
-    10           23        0.0083675         shrink
-    11           25       0.00348573         contract outside
-    12           27       0.00348573         contract inside
-    13           29       0.00348573         contract inside
-    14           31       0.00348573         contract inside
-    15           35        0.0031547         shrink
-    16           37        0.0031547         contract inside
-    17           38        0.0031547         reflect
-    18           42        0.0031547         shrink
-    19           44        0.0031547         contract outside
+     0            1        0.0504958         
+     1            3        0.0504958         initial simplex
+     2            5        0.0504958         contract outside
+     3            7        0.0504958         contract inside
+     4            9        0.0504958         contract outside
+     5           11        0.0504958         contract inside
+     6           13        0.0504958         contract inside
+     7           15        0.0504958         contract inside
+     8           17        0.0286344         contract inside
+     9           19       0.00123027         contract outside
+    10           21      0.000823306         contract inside
+    11           23      0.000823306         contract outside
+    12           25      0.000823306         contract inside
+    13           27      0.000823306         contract inside
+    14           29      0.000817688         reflect
+    15           31      0.000388862         contract inside
+    16           33      0.000388862         contract inside
+    17           35      0.000388862         contract inside
+    18           37      0.000231879         reflect
+    19           39      0.000115292         contract inside
+    20           40      0.000115292         reflect
  
 Optimization terminated:
  the current x satisfies the termination criteria using OPTIONS.TolX of 1.000000e-04 
  and F(X) satisfies the convergence criteria using OPTIONS.TolFun of 1.000000e-03 
 
-Done! Time to compute: 249.15 seconds, error=3.15e-03 
+Done! Time to compute: 229.65 seconds, error=1.15e-04 
 
  
     'Aggregate Prices'    ' '                   ' '     
     'Interest Rate'       'Int. Goods Price'    'Wage'  
-    [          0.0500]    [          0.2006]    [0.3094]
+    [          0.0500]    [          0.2097]    [0.3044]
 
  
  
-    'Optimal Capital'           []           []           []            []
-    [        10.4716]    [21.6744]    [44.8620]    [92.8562]    [192.1956]
+    'Optimal Capital'           []           []            []            []
+    [        13.0738]    [27.0605]    [56.0103]    [115.9312]    [239.9565]
 
  
 price residual
-    0.0032
+   1.1529e-04
 
  
     'Agent Composition'    ' '                ' '         
     'Workers'              'Self-Employed'    'Unemployed'
-    [          64.2939]    [      32.4204]    [    3.2857]
+    [          69.3321]    [      27.6335]    [    3.0344]
 
  
  
     'Self-Employed by EZ'           []           []           []           []
-    [            87.3500]    [80.5880]    [93.3333]    [98.6532]    [99.6503]
-    [            11.5773]    [48.8463]    [71.2984]    [87.6145]    [95.9572]
+    [            87.1419]    [59.1365]    [56.9979]    [75.8671]    [94.6454]
+    [            10.6118]    [41.0138]    [51.8715]    [63.7567]    [80.4612]
     [                  0]    [      0]    [      0]    [      0]    [      0]
 
  
  
-    'Composition Workers'          []          []              []              []
-    [             4.6289]    [0.2189]    [0.0141]    [5.1900e-05]    [1.6509e-08]
-    [            78.5203]    [3.7856]    [0.3953]    [    0.0033]    [1.2270e-06]
-    [            10.9392]    [1.2427]    [0.2469]    [    0.0047]    [5.5421e-06]
+    'Composition Workers'          []          []          []              []
+    [             3.5363]    [0.5274]    [0.1283]    [0.0011]    [2.3980e-07]
+    [            76.6415]    [4.7122]    [0.8229]    [0.0119]    [6.3820e-06]
+    [            11.8142]    [1.4795]    [0.3187]    [0.0061]    [6.3747e-06]
 
  
  
     'Composition Self-…'           []          []          []              []
-    [            66.6273]    [1.8941]    [0.4104]    [0.0079]    [9.8061e-06]
-    [            21.4300]    [7.5351]    [2.0469]    [0.0482]    [6.0706e-05]
+    [            62.7618]    [1.9988]    [0.4454]    [0.0089]    [1.1100e-05]
+    [            23.8273]    [8.5803]    [2.3226]    [0.0547]    [6.8825e-05]
     [                  0]    [     0]    [     0]    [     0]    [         0]
 
  
  
 Transitions
     ' '    'Up'         'Wp'         'Ep'     
-    'U'    [26.9857]    [73.0000]    [ 0.0143]
-    'W'    [ 3.0104]    [76.6646]    [20.3250]
-    'E'    [ 1.4297]    [38.8790]    [59.6913]
+    'U'    [24.9677]    [75.0000]    [ 0.0323]
+    'W'    [ 2.7384]    [82.2312]    [15.0304]
+    'E'    [ 1.3684]    [36.3462]    [62.2854]
 
  
  
@@ -209,146 +201,148 @@ Transitions
 
     'Top Wealth Shares'           []           []           []           []           []
     'pct'                  [     10]    [     25]    [     50]    [     75]    [     90]
-    'Share'                [99.6319]    [97.3095]    [84.7680]    [60.4358]    [31.2522]
+    'Share'                [99.5695]    [96.9924]    [83.5796]    [56.5175]    [29.8731]
 
   Column 7
 
           []
     [    99]
-    [5.4968]
+    [4.9283]
 
  
  
     'Aggregate Variables'    ' '             ' '         ' '     
     'Assets'                 'Int. Goods'    'Labor'     'Output'
-    [             4.2009]    [    1.2666]    [1.3992]    [0.6750]
+    [             5.0202]    [    1.3748]    [1.5803]    [0.7515]
 
  
  
     '% Change'           []           []           []
     'A'           'X'          'N'          'Y'      
-    [ -1.6630]    [-0.2112]    [-0.0494]    [-0.1077]
+    [ -2.5557]    [-0.5739]    [-0.0181]    [-0.2185]
 
  
  
     '% Change'                    []          []
     'Int. Rate'    'Int. Good Price'    'Wage'  
-    [        0]    [        -0.0646]    [0.3412]
+    [        0]    [         0.0146]    [0.4065]
 
  
  
 Welfare Gain by state of benchmark
     'CE - SE'    'CE - W'    'CE - U'    'CE - All'
-    [ 0.1257]    [0.1920]    [1.1651]    [  0.1991]
+    [ 0.1908]    [0.2913]    [0.9368]    [  0.2811]
 
  
  
 Welfare Gain for All Agentes by EZ
-    0.2775    0.2592    0.1228    0.0097   -0.0406
-    0.1862    0.0758    0.0391    0.0215   -0.0433
-    0.1593    0.0391    0.0572    0.0502   -0.0035
+    0.3096    0.4849    0.4268    0.2123    0.1554
+    0.2799    0.2275    0.2274    0.0783    0.1226
+    0.2608    0.1426    0.2015    0.1347    0.1560
 
  
  
 Welfare Gain for Workers by EZ
-    1.1422    1.6579    2.4635    4.0238    5.8603
-    0.2001    0.1816    0.1473    0.2202    0.0454
-    0.1593    0.0391    0.0572    0.0502   -0.0035
+    0.8994    1.1411    1.2820    1.6183    2.7878
+    0.2945    0.3603    0.3804    0.1484    0.2085
+    0.2608    0.1426    0.2015    0.1347    0.1560
 
  
  
 Welfare Gain for Self-Employed by EZ
-    0.1662   -0.0010    0.0107   -0.0172   -0.0478
-    0.0770   -0.0293   -0.0003   -0.0042   -0.0464
+    0.2309    0.0678    0.1286    0.0477    0.1088
+    0.1531    0.0475    0.1253    0.0534    0.1101
        NaN       NaN       NaN       NaN       NaN
 
  
  
 Welfare Gain by Averages
     'CE - SE'    'CE - W'     'CE - U'    'CE - All'
-    [ 0.3748]    [-0.4696]    [0.6121]    [ -0.3387]
+    [ 0.1443]    [-0.8029]    [0.4936]    [ -0.6534]
 
  
 Set unemployment earnings to 20% of wage (Originally 5%)
  
  Iteration   Func-count     min f(x)         Procedure
-     0            1         0.120036         
-     1            3         0.120036         initial simplex
-     2            5         0.120036         contract outside
-     3            7         0.120036         contract outside
-     4            9         0.120036         contract inside
-     5           11        0.0517803         contract inside
-     6           13        0.0517803         contract outside
-     7           15        0.0202797         contract inside
-     8           17        0.0202797         contract inside
-     9           19        0.0202797         contract inside
-    10           20        0.0202797         reflect
-    11           22        0.0202797         contract inside
-    12           24       0.00674928         expand
-    13           26       0.00674928         contract inside
-    14           27       0.00674928         reflect
-    15           29       0.00674928         contract inside
-    16           31       0.00674928         contract inside
-    17           35       0.00674928         shrink
-    18           39       0.00674928         shrink
-    19           41       0.00618989         contract inside
-    20           43       0.00600618         expand
-    21           45       0.00600618         contract inside
-    22           47       0.00600618         contract inside
+     0            1         0.049081         
+     1            3         0.049081         initial simplex
+     2            5         0.049081         contract inside
+     3            7         0.049081         contract outside
+     4            8         0.049081         reflect
+     5           10         0.049081         contract inside
+     6           12         0.049081         contract inside
+     7           14         0.049081         contract inside
+     8           16         0.049081         contract inside
+     9           18         0.049081         contract inside
+    10           20        0.0111854         contract inside
+    11           22       0.00815301         reflect
+    12           24       0.00815301         contract inside
+    13           26       0.00430103         reflect
+    14           28       0.00372933         contract inside
+    15           30       0.00372933         contract inside
+    16           34       0.00372933         shrink
+    17           36        0.0033131         contract inside
+    18           38       0.00247143         reflect
+    19           40       0.00247143         contract inside
+    20           42       0.00217535         reflect
+    21           44       0.00212542         reflect
+    22           46       0.00212542         contract inside
+    23           48       0.00212542         contract inside
+    24           50       0.00207187         reflect
  
 Optimization terminated:
  the current x satisfies the termination criteria using OPTIONS.TolX of 1.000000e-04 
  and F(X) satisfies the convergence criteria using OPTIONS.TolFun of 1.000000e-03 
 
-Done! Time to compute: 241.12 seconds, error=6.01e-03 
+Done! Time to compute: 243.59 seconds, error=2.07e-03 
 
  
     'Aggregate Prices'    ' '                   ' '     
     'Interest Rate'       'Int. Goods Price'    'Wage'  
-    [          0.0500]    [          0.2017]    [0.3135]
+    [          0.0500]    [          0.2101]    [0.3059]
 
  
  
-    'Optimal Capital'           []           []           []            []
-    [        10.7474]    [22.2451]    [46.0434]    [95.3016]    [197.2570]
+    'Optimal Capital'           []           []            []            []
+    [        13.1846]    [27.2897]    [56.4848]    [116.9134]    [241.9896]
 
  
 price residual
-    0.0060
+    0.0021
 
  
     'Agent Composition'    ' '                ' '         
     'Workers'              'Self-Employed'    'Unemployed'
-    [          64.3841]    [      28.2905]    [    7.3253]
+    [          69.4480]    [      25.3281]    [    5.2239]
 
  
  
     'Self-Employed by EZ'           []           []           []           []
-    [            74.1562]    [35.2336]    [32.3155]    [27.3601]    [54.3689]
-    [            12.4235]    [36.3255]    [41.1961]    [38.3253]    [53.3522]
+    [            77.0404]    [44.3821]    [44.3818]    [35.8602]    [47.0598]
+    [            11.1152]    [35.8949]    [46.1282]    [41.0660]    [47.3176]
     [                  0]    [      0]    [      0]    [      0]    [      0]
 
  
  
     'Composition Workers'          []          []          []              []
-    [             8.3535]    [1.4737]    [0.3783]    [0.0097]    [3.8287e-06]
-    [            70.4556]    [6.1732]    [1.3660]    [0.0362]    [2.4743e-05]
-    [             9.8922]    [1.4953]    [0.3575]    [0.0087]    [8.5438e-06]
+    [             5.8996]    [0.8881]    [0.2022]    [0.0060]    [4.6808e-06]
+    [            72.8970]    [5.7881]    [1.0190]    [0.0295]    [2.8757e-05]
+    [            11.3103]    [1.6066]    [0.3451]    [0.0085]    [9.5877e-06]
 
  
  
     'Composition Self-…'           []          []          []              []
-    [            60.7571]    [2.0321]    [0.4579]    [0.0093]    [1.1563e-05]
-    [            25.3342]    [8.9267]    [2.4257]    [0.0570]    [7.1732e-05]
+    [            58.3619]    [2.0894]    [0.4756]    [0.0099]    [1.2267e-05]
+    [            26.8753]    [9.5550]    [2.5722]    [0.0606]    [7.6148e-05]
     [                  0]    [     0]    [     0]    [     0]    [         0]
 
  
  
 Transitions
     ' '    'Up'         'Wp'         'Ep'     
-    'U'    [26.8851]    [72.9896]    [ 0.1253]
-    'W'    [ 7.3861]    [76.3102]    [16.3037]
-    'E'    [ 2.1223]    [35.0143]    [62.8633]
+    'U'    [24.8148]    [74.9537]    [ 0.2315]
+    'W'    [ 4.8714]    [82.1673]    [12.9613]
+    'E'    [ 2.1499]    [33.4370]    [64.4131]
 
  
  
@@ -356,63 +350,63 @@ Transitions
 
     'Top Wealth Shares'           []           []           []           []           []
     'pct'                  [     10]    [     25]    [     50]    [     75]    [     90]
-    'Share'                [99.6549]    [97.7344]    [85.8558]    [60.5628]    [32.5657]
+    'Share'                [99.5871]    [96.4237]    [83.2034]    [55.8000]    [30.1604]
 
   Column 7
 
           []
     [    99]
-    [5.2032]
+    [5.0400]
 
  
  
     'Aggregate Variables'    ' '             ' '         ' '     
     'Assets'                 'Int. Goods'    'Labor'     'Output'
-    [             4.2846]    [    1.2659]    [1.4024]    [0.6758]
+    [             5.2533]    [    1.3811]    [1.5863]    [0.7546]
 
  
  
     '% Change'           []          []          []
     'A'           'X'          'N'         'Y'     
-    [  0.2971]    [-0.2708]    [0.1821]    [0.0189]
+    [  1.9702]    [-0.1173]    [0.3638]    [0.1903]
 
  
  
     '% Change'                    []          []
     'Int. Rate'    'Int. Good Price'    'Wage'  
-    [        0]    [         0.4562]    [1.6904]
+    [        0]    [         0.1835]    [0.9017]
 
  
  
 Welfare Gain by state of benchmark
     'CE - SE'    'CE - W'    'CE - U'    'CE - All'
-    [ 1.9075]    [2.5760]    [8.6364]    [  2.5366]
+    [ 0.9432]    [1.5186]    [5.6314]    [  1.4718]
 
  
  
 Welfare Gain for All Agentes by EZ
-    3.0534    2.6871    1.6693    1.1636    1.0968
-    2.5183    2.0603    1.5299    1.1617    1.1084
-    1.5543    1.3910    1.3581    1.2867    1.2568
+    1.7026    2.8775    2.0217    1.1817    0.5843
+    1.4588    1.7299    1.2564    0.8586    0.5089
+    0.8349    0.7484    0.6537    0.6114    0.5563
 
  
  
 Welfare Gain for Workers by EZ
-    8.5976    9.4800   10.6480   12.5427   14.3627
-    2.7203    2.9978    2.6596    1.7435    1.5719
-    1.5543    1.3910    1.3581    1.2867    1.2568
+    5.5255    6.2526    6.2682    7.1837    8.3117
+    1.5730    2.5778    2.3866    1.9214    0.8876
+    0.8349    0.7484    0.6537    0.6114    0.5563
 
  
  
 Welfare Gain for Self-Employed by EZ
-    2.3399    1.4232    1.2390    1.0872    1.0805
-    0.9240    1.1284    1.1190    1.0867    1.0920
+    1.1929    0.7324    0.5410    0.4792    0.4474
+    0.4639    0.5801    0.5019    0.4814    0.4536
        NaN       NaN       NaN       NaN       NaN
 
  
  
 Welfare Gain by Averages
     'CE - SE'    'CE - W'    'CE - U'     'CE - All'
-    [11.1851]    [1.7355]    [16.5586]    [  2.6313]
+    [ 7.4790]    [1.7801]    [14.9964]    [  2.2682]
 
  

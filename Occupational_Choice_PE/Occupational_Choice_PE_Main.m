@@ -14,7 +14,7 @@ diary('Log_Occupational_Choice.txt')
 %% Stationary Equilibrium (Histogram Method and discrete VFI)
 
     t0 = tic;
-    x_0 = [0.208595303457915   0.375660751548683];
+    x_0 = [0.210270660752448   0.308161045011833];
 %     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
 %     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
     options = optimset('Display','iter','TolFun',1e-03);
@@ -40,7 +40,7 @@ diary('Log_Occupational_Choice.txt')
     
     [A_ben,X_ben,N_ben,Y_ben,Earnings_W_ben,Earnings_E_ben] = ...
         Graphs_Tables('ben',r_ben,p_ben,w_ben,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition) ;
-    
+ 
 
 %% Experiment 1: Change in household's borrowing constraint
 
