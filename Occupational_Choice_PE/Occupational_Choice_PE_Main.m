@@ -14,7 +14,7 @@ diary('Log_Occupational_Choice.txt')
 %% Stationary Equilibrium (Histogram Method and discrete VFI)
 
     t0 = tic;
-    x_0 = [0.217382233344189   0.379041511277377];
+    x_0 = [0.208595303457915   0.375660751548683];
 %     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
 %     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
     options = optimset('Display','iter','TolFun',1e-03);
