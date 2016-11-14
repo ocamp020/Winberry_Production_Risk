@@ -153,6 +153,8 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
                 mTransition_out(3,1) = sum(sum(mTransition(E_ind,U_ind),2).*G(E_ind))/sum(G(E_ind)) ;
                 mTransition_out(3,2) = sum(sum(mTransition(E_ind,W_ind),2).*G(E_ind))/sum(G(E_ind)) ;
                 mTransition_out(3,3) = sum(sum(mTransition(E_ind,E_ind),2).*G(E_ind))/sum(G(E_ind)) ;
+                
+                mTransition_out = 100*mTransition_out ;
             end 
         end 
 
