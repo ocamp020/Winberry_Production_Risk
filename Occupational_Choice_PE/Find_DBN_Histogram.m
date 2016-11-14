@@ -138,9 +138,9 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
                 VE_out    = VE_VFI   ;
                 
                 mTransition_out = NaN(3,3) ; 
-                U_ind = [ repmat(kron([1 ; 0 ; 0],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ] ;
-                W_ind = [ repmat(kron([0 ; 1 ; 1],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ] ;
-                E_ind = [zeros(n_State,1) ; ones(n_State,1)] ;
+                U_ind = [ repmat(kron([1 ; 0 ; 0],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
+                W_ind = [ repmat(kron([0 ; 1 ; 1],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
+                E_ind = [zeros(n_State,1) ; ones(n_State,1)]==1 ;
                 % From Unemployment
                 mTransition_out(1,1) = sum(sum(mTransition(U_ind,U_ind))) ;
                 mTransition_out(1,2) = sum(sum(mTransition(U_ind,W_ind))) ;
