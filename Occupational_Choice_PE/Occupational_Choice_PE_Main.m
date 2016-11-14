@@ -35,11 +35,11 @@ diary('Log_Occupational_Choice.txt')
 
 %% Distribution, Value and Policy Functions 
 
-    [price_residual,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E] = Find_DBN_Histogram(x) ;
+    [price_residual,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition] = Find_DBN_Histogram(x) ;
     disp('price residual'); disp(price_residual);
     
     [A_ben,X_ben,N_ben,Y_ben,Earnings_W_ben,Earnings_E_ben] = ...
-        Graphs_Tables('ben',r_ben,p_ben,w_ben,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E) ;
+        Graphs_Tables('ben',r_ben,p_ben,w_ben,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition) ;
     
 
 %% Experiment 1: Change in household's borrowing constraint

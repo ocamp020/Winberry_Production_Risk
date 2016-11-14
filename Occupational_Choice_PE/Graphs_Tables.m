@@ -2,7 +2,7 @@
 % Graphs And Tables
 % Juan David Herreno & Sergio Ocampo (2016)
 
-function [A_ss,X_ss,N_ss,Y_ss,Earnings_W,Earnings_E] = Graphs_Tables(model,r,p,w,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E)
+function [A_ss,X_ss,N_ss,Y_ss,Earnings_W,Earnings_E] = Graphs_Tables(model,r,p,w,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition)
 
 global mmu ddelta llambda tau_k AA aalpha...
        n_A n_E n_Z vA_Grid vE_Grid mA_Grid mZ_Grid mE_Grid
@@ -162,7 +162,9 @@ global mmu ddelta llambda tau_k AA aalpha...
         disp(' '); disp(Mat); disp(' ');
 
 %% Transitions
-
+    Mat = Transition ; 
+    Mat = [{' ','Up','Wp','Ep'};{'U';'W';'E'} num2cell(Mat)] ;
+    disp(' '); disp('Transitions'); disp(Mat); disp(' ');
 
 
 %% Top Wealth Shares
@@ -195,7 +197,7 @@ global mmu ddelta llambda tau_k AA aalpha...
     DBN_all_vec  = DBN_all_vec(Earnings_ind)/sum(DBN_all_vec) ;
     C_DBN_all_vec= cumsum(DBN_all_vec) ;
     % Percentiles 
-    pct_list = [0.05:0.05:1]' ;
+    pct_list = [0.05:0.05:0.95]' ;
     pct_ind = knnsearch(C_DBN_all_vec,pct_list);
     E_share_pct = NaN(numel(pct_list),1) ;
     low = 0 ;
@@ -235,7 +237,7 @@ global mmu ddelta llambda tau_k AA aalpha...
     A_ss = vA_Grid'*sum(sum(mDBN_W+mDBN_E,3),2) ;
     K_ss = min( max( 0 , llambda*mA_Grid ) , (mmu*p*mZ_Grid.^mmu/(r+ddelta)).^(1/(1-mmu)) )  ;
     X_ss = sum(sum(sum( (mZ_Grid.*K_ss).^mmu .* mDBN_E ))).^(1/mmu) ;
-    N_ss = sum( vE_Grid.*squeeze(sum(sum(mDBN_W,3),1))' ) ;
+    N_ss = sum( vE_Grid(2:n_E).*squeeze(sum(sum(mDBN_W(:,2:n_E,:),3),1))' ) ;
     Y_ss = AA*X_ss^(aalpha)*N_ss^(1-aalpha) ;   
     
     Mat = [A_ss X_ss N_ss Y_ss] ; 

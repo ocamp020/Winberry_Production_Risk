@@ -2,7 +2,7 @@
 % Find Stationary Distribution with the Histogram Method
 % Juan David Herreno & Sergio Ocampo (2016)
 
-function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out] = Find_DBN_Histogram(x)
+function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out,mTransition_out] = Find_DBN_Histogram(x)
 
 
 %% Initialization (global variables)
@@ -114,7 +114,7 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
         A = sum( vA_Grid.*sum(sum(mDBN_W+mDBN_E,3),2) ) ;
         K = min( max( 0 , llambda*mA_Grid ) , (mmu*p*mZ_Grid.^mmu/(r+ddelta)).^(1/(1-mmu)) )  ;
         X = sum(sum(sum( (mZ_Grid.*K).^mmu .* mDBN_E ))).^(1/mmu) ;
-        N = sum( vE_Grid.*squeeze(sum(sum(mDBN_W,3),1))' ) ;
+        N = sum( vE_Grid(2:n_E).*squeeze(sum(sum(mDBN_W(:,2:n_E,:),3),1))' ) ;
         w_new = (1-aalpha)*AA*(X/N)^aalpha/(1-tau_n) ;
         p_new = (aalpha)*AA*(X)^(aalpha-mmu)*N^(1-aalpha) ;
         
@@ -136,6 +136,23 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
                 OC_E_out  = OC_E_VFI ;
                 VW_out    = VW_VFI   ;
                 VE_out    = VE_VFI   ;
+                
+                mTransition_out = NaN(3,3) ; 
+                U_ind = [ repmat(kron([1 ; 0 ; 0],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ] ;
+                W_ind = [ repmat(kron([0 ; 1 ; 1],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ] ;
+                E_ind = [zeros(n_State,1) ; ones(n_State,1)] ;
+                % From Unemployment
+                mTransition_out(1,1) = sum(sum(mTransition(U_ind,U_ind))) ;
+                mTransition_out(1,2) = sum(sum(mTransition(U_ind,W_ind))) ;
+                mTransition_out(1,3) = sum(sum(mTransition(U_ind,E_ind))) ;
+                % From Employment
+                mTransition_out(2,1) = sum(sum(mTransition(W_ind,U_ind))) ;
+                mTransition_out(2,2) = sum(sum(mTransition(W_ind,W_ind))) ;
+                mTransition_out(2,3) = sum(sum(mTransition(W_ind,E_ind))) ;
+                % From Unemployment
+                mTransition_out(3,1) = sum(sum(mTransition(E_ind,U_ind))) ;
+                mTransition_out(3,2) = sum(sum(mTransition(E_ind,W_ind))) ;
+                mTransition_out(3,3) = sum(sum(mTransition(E_ind,E_ind))) ;
             end 
         end 
 
