@@ -111,14 +111,20 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
         
         
     %% Update prices 
+        % Update quantities
         A = sum( vA_Grid.*sum(sum(mDBN_W+mDBN_E,3),2) ) ;
         K = min( max( 0 , llambda*mA_Grid ) , (mmu*p*mZ_Grid.^mmu/(r+ddelta)).^(1/(1-mmu)) )  ;
         X = sum(sum(sum( (mZ_Grid.*K).^mmu .* mDBN_E ))).^(1/mmu) ;
         N = sum( vE_Grid(2:n_E).*squeeze(sum(sum(mDBN_W(:,2:n_E,:),3),1))' ) ;
+        
+        % Update taxes
+        tau_n = vE_Grid(1)*sum(sum(mDBN_W(:,1,:))) / N ; 
+        
+        % Update prices
         w_new = (1-aalpha)*AA*(X/N)^aalpha/(1-tau_n) ;
         p_new = (aalpha)*AA*(X)^(aalpha-mmu)*N^(1-aalpha) ;
         
-                           
+        
     
     % Residual
         residual = [p_new/p-1 ; w_new/w-1] ;
