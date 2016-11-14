@@ -142,17 +142,17 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
                 W_ind = [ repmat(kron([0 ; 1 ; 1],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
                 E_ind = [zeros(n_State,1) ; ones(n_State,1)]==1 ;
                 % From Unemployment
-                mTransition_out(1,1) = sum(sum(mTransition(U_ind,U_ind))) ;
-                mTransition_out(1,2) = sum(sum(mTransition(U_ind,W_ind))) ;
-                mTransition_out(1,3) = sum(sum(mTransition(U_ind,E_ind))) ;
+                mTransition_out(1,1) = sum(sum(mTransition(U_ind,U_ind),2).*G(U_ind))/sum(G(U_ind)) ;
+                mTransition_out(1,2) = sum(sum(mTransition(U_ind,W_ind),2).*G(U_ind))/sum(G(U_ind)) ;
+                mTransition_out(1,3) = sum(sum(mTransition(U_ind,E_ind),2).*G(U_ind))/sum(G(U_ind)) ;
                 % From Employment
-                mTransition_out(2,1) = sum(sum(mTransition(W_ind,U_ind))) ;
-                mTransition_out(2,2) = sum(sum(mTransition(W_ind,W_ind))) ;
-                mTransition_out(2,3) = sum(sum(mTransition(W_ind,E_ind))) ;
+                mTransition_out(2,1) = sum(sum(mTransition(W_ind,U_ind),2).*G(W_ind))/sum(G(W_ind)) ;
+                mTransition_out(2,2) = sum(sum(mTransition(W_ind,W_ind),2).*G(W_ind))/sum(G(W_ind)) ;
+                mTransition_out(2,3) = sum(sum(mTransition(W_ind,E_ind),2).*G(W_ind))/sum(G(W_ind)) ;
                 % From Unemployment
-                mTransition_out(3,1) = sum(sum(mTransition(E_ind,U_ind))) ;
-                mTransition_out(3,2) = sum(sum(mTransition(E_ind,W_ind))) ;
-                mTransition_out(3,3) = sum(sum(mTransition(E_ind,E_ind))) ;
+                mTransition_out(3,1) = sum(sum(mTransition(E_ind,U_ind),2).*G(E_ind))/sum(G(E_ind)) ;
+                mTransition_out(3,2) = sum(sum(mTransition(E_ind,W_ind),2).*G(E_ind))/sum(G(E_ind)) ;
+                mTransition_out(3,3) = sum(sum(mTransition(E_ind,E_ind),2).*G(E_ind))/sum(G(E_ind)) ;
             end 
         end 
 
