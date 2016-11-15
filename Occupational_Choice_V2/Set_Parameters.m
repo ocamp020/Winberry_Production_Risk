@@ -43,7 +43,7 @@ global n_E n_Z n_A n_State ...
 	
 % Order of approximation
 n_E     = 3   ; % number of gridpoints for labor productivity
-n_Z     = 5   ; % number of gridpoints for entrepreneurial productivity
+n_Z     = 7   ; % number of gridpoints for entrepreneurial productivity
 n_A     = 150  ; % number of gridpoints for assets
 n_State = n_E * n_Z * n_A;
 
@@ -68,11 +68,11 @@ elseif n_E == 3
     mE_Transition = [0.1  0.8  0.1;
                      0.1  0.8  0.1;
                      0.05 0.65 0.3];
-    mE_Transition_W = [0.25  0.69 0.06;
-                       0.14  0.78 0.08;
-                       0.10  0.60 0.30];
-    mE_Transition_E = [0.40  0.55 0.05;
-                       0.08  0.81 0.11;
+    mE_Transition_W = [0.21  0.74 0.05;
+                       0.14  0.785 0.075;
+                       0.08  0.60 0.32];
+    mE_Transition_E = [0.55  0.41 0.04;
+                       0.10  0.80 0.10;
                        0.07  0.67 0.26];
 else
     [vE_Grid,mE_Transition] = MarkovAR(n_E-1,3,0.885,0.1) ;
@@ -107,7 +107,7 @@ if n_Z == 2
     mZ_Transition = [0.98 0.02;
                     0.95 0.05] ;
 else
-    [vZ_Grid,mZ_Transition] = MarkovAR(n_Z,4.5,0.5,0.07) ;
+    [vZ_Grid,mZ_Transition] = MarkovAR(n_Z,4.5,0.5,0.08) ;
     vZ_Grid = exp(vZ_Grid)' ;
 
     %vZGrid = [0 1.2 2.3] ;

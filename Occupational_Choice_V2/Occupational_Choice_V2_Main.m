@@ -14,10 +14,10 @@ diary('Log_Occupational_Choice.txt')
 %% Stationary Equilibrium (Histogram Method and discrete VFI)
 
     t0 = tic;
-    x_0 = [0.55];
+    x_0 = [0.416914281250000];
 %     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
 %     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
-    options = optimset('Display','iter','TolFun',1e-03);
+    options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
     [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x),x_0,options);
     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
 
@@ -64,7 +64,7 @@ diary('Log_Occupational_Choice.txt')
     x_0 = x ;
 %     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
 %     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
-    options = optimset('Display','iter','TolFun',1e-03);
+    options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
     [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x),x_0,options);
     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
 
@@ -118,7 +118,7 @@ diary('Log_Occupational_Choice.txt')
     x_0 = x ;
 %     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
 %     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
-    options = optimset('Display','iter','TolFun',1e-03);
+    options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
     [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x),x_0,options);
     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
 

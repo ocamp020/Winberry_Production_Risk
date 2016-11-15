@@ -26,103 +26,6 @@ global mmu ddelta llambda tau_k tau_n AA aalpha...
     Earnings_vec = [Earnings_W(:) ; Earnings_E(:) ] ;
     [Earnings_vec,Earnings_ind] = sort(Earnings_vec) ;
        
-%% Policy and Value Functions
-
-    % Value Functions
-        figure; 
-        for i_z=1:n_Z
-            subplot(2,3,i_z); plot(vA_Grid,V_W(:,:,i_z),'linewidth',2); title('V_W');
-            xlim([min(vA_Grid) max(vA_Grid)])
-        end 
-        set(gcf,'color','w')
-        file_name_eps = ['V_W_',model,'.eps'] ;
-        file_name_fig = ['V_W_',model,'.fig'] ;
-        print('-depsc',file_name_eps)
-        savefig(file_name_fig)
-
-        figure; 
-        for i_z=1:n_Z
-            subplot(2,3,i_z); plot(vA_Grid,V_E(:,:,i_z),'linewidth',2); title('V_E');
-            xlim([min(vA_Grid) max(vA_Grid)])
-        end 
-        set(gcf,'color','w')
-        file_name_eps = ['V_E_',model,'.eps'] ;
-        file_name_fig = ['V_E_',model,'.fig'] ;
-        print('-depsc',file_name_eps)
-        savefig(file_name_fig)
-        
-        
-    % Saving Functions
-        figure;
-        i_plot  = 1;
-        for i_e = 1:n_E
-        for i_z = 1:n_Z
-            subplot(n_E,n_Z,i_plot); hold on; 
-            plot(vA_Grid,vA_Grid(mAp_W(:,i_e,i_z)),'linewidth',2)
-            plot(vA_Grid,vA_Grid,':','linewidth',2)
-            hold off; xlim([min(vA_Grid) max(vA_Grid)])
-            %title('Saving W')
-            i_plot = i_plot +1 ;
-        end
-        end
-        set(gcf,'color','w')
-        file_name_eps = ['Ap_W_',model,'.eps'] ;
-        file_name_fig = ['Ap_W_',model,'.fig'] ;
-        print('-depsc',file_name_eps)
-        savefig(file_name_fig)
-
-        figure;
-        i_plot  = 1;
-        for i_e = 1:n_E
-        for i_z = 1:n_Z
-            subplot(n_E,n_Z,i_plot); hold on; 
-            plot(vA_Grid,vA_Grid(mAp_E(:,i_e,i_z)),'linewidth',2)
-            plot(vA_Grid,vA_Grid,':')
-            hold off; xlim([min(vA_Grid) max(vA_Grid)])
-            %title('Saving E')
-            i_plot = i_plot +1 ;
-        end
-        end
-        set(gcf,'color','w')
-        file_name_eps = ['Ap_E_',model,'.eps'] ;
-        file_name_fig = ['Ap_E_',model,'.fig'] ;
-        print('-depsc',file_name_eps)
-        savefig(file_name_fig)
-        
-    % Occupational Choice
-        figure;
-        i_plot  = 1;
-        for i_e = 1:n_E
-        for i_z = 1:n_Z
-            subplot(n_E,n_Z,i_plot);
-            plot(vA_Grid,OC_W(:,i_e,i_z),'linewidth',2)
-            xlim([min(vA_Grid) max(vA_Grid)]); ylim([-1,2]);
-            %title('OC W')
-            i_plot = i_plot +1 ;
-        end
-        end
-        set(gcf,'color','w')
-        file_name_eps = ['OC_W_',model,'.eps'] ;
-        file_name_fig = ['OC_W_',model,'.fig'] ;
-        print('-depsc',file_name_eps)
-        savefig(file_name_fig)
-
-        figure;
-        i_plot  = 1;
-        for i_e = 1:n_E
-        for i_z = 1:n_Z
-            subplot(n_E,n_Z,i_plot);
-            plot(vA_Grid,OC_E(:,i_e,i_z),'linewidth',2)
-            xlim([min(vA_Grid) max(vA_Grid)]); ylim([-1,2]);
-            %title('OC E')
-            i_plot = i_plot +1 ;
-        end
-        end
-        set(gcf,'color','w')
-        file_name_eps = ['OC_E_',model,'.eps'] ;
-        file_name_fig = ['OC_E_',model,'.fig'] ;
-        print('-depsc',file_name_eps)
-        savefig(file_name_fig)
 
 
 %% Distribution and Composition
@@ -244,6 +147,109 @@ global mmu ddelta llambda tau_k tau_n AA aalpha...
     Mat = [A_ss K_ss N_ss Y_ss] ; 
     Mat = [{'Aggregate Variables',' ',' ',' ';'Assets','Capital','Labor','Output'};num2cell(Mat)];
     disp(' '); disp(Mat); disp(' ');
+    
+    N_supply = sum( vE_Grid(2:n_E).*squeeze(sum(sum(mDBN_W(:,2:n_E,:),3),1))' ) ;
+    Mat = [N_ss N_supply] ; 
+    Mat = [{'Aggregate Variables',' ';'Labor Demand','Labor Supply'};num2cell(Mat)];
+    disp(' '); disp(Mat); disp(' ');
+    
+%% Policy and Value Functions
+
+    % Value Functions
+        figure; 
+        for i_z=1:n_Z
+            subplot(2,ceil(n_Z/2),i_z); plot(vA_Grid,V_W(:,:,i_z),'linewidth',2); title('V_W');
+            xlim([min(vA_Grid) max(vA_Grid)])
+        end 
+        set(gcf,'color','w')
+        file_name_eps = ['V_W_',model,'.eps'] ;
+        file_name_fig = ['V_W_',model,'.fig'] ;
+        print('-depsc',file_name_eps)
+        savefig(file_name_fig)
+
+        figure; 
+        for i_z=1:n_Z
+            subplot(2,ceil(n_Z/2),i_z); plot(vA_Grid,V_E(:,:,i_z),'linewidth',2); title('V_E');
+            xlim([min(vA_Grid) max(vA_Grid)])
+        end 
+        set(gcf,'color','w')
+        file_name_eps = ['V_E_',model,'.eps'] ;
+        file_name_fig = ['V_E_',model,'.fig'] ;
+        print('-depsc',file_name_eps)
+        savefig(file_name_fig)
+        
+        
+    % Saving Functions
+        figure;
+        i_plot  = 1;
+        for i_e = 1:n_E
+        for i_z = 1:n_Z
+            subplot(n_E,n_Z,i_plot); hold on; 
+            plot(vA_Grid,vA_Grid(mAp_W(:,i_e,i_z)),'linewidth',2)
+            plot(vA_Grid,vA_Grid,':','linewidth',2)
+            hold off; xlim([min(vA_Grid) max(vA_Grid)])
+            %title('Saving W')
+            i_plot = i_plot +1 ;
+        end
+        end
+        set(gcf,'color','w')
+        file_name_eps = ['Ap_W_',model,'.eps'] ;
+        file_name_fig = ['Ap_W_',model,'.fig'] ;
+        print('-depsc',file_name_eps)
+        savefig(file_name_fig)
+
+        figure;
+        i_plot  = 1;
+        for i_e = 1:n_E
+        for i_z = 1:n_Z
+            subplot(n_E,n_Z,i_plot); hold on; 
+            plot(vA_Grid,vA_Grid(mAp_E(:,i_e,i_z)),'linewidth',2)
+            plot(vA_Grid,vA_Grid,':')
+            hold off; xlim([min(vA_Grid) max(vA_Grid)])
+            %title('Saving E')
+            i_plot = i_plot +1 ;
+        end
+        end
+        set(gcf,'color','w')
+        file_name_eps = ['Ap_E_',model,'.eps'] ;
+        file_name_fig = ['Ap_E_',model,'.fig'] ;
+        print('-depsc',file_name_eps)
+        savefig(file_name_fig)
+        
+    % Occupational Choice
+        figure;
+        i_plot  = 1;
+        for i_e = 1:n_E
+        for i_z = 1:n_Z
+            subplot(n_E,n_Z,i_plot);
+            plot(vA_Grid,OC_W(:,i_e,i_z),'linewidth',2)
+            xlim([min(vA_Grid) max(vA_Grid)]); ylim([-1,2]);
+            %title('OC W')
+            i_plot = i_plot +1 ;
+        end
+        end
+        set(gcf,'color','w')
+        file_name_eps = ['OC_W_',model,'.eps'] ;
+        file_name_fig = ['OC_W_',model,'.fig'] ;
+        print('-depsc',file_name_eps)
+        savefig(file_name_fig)
+
+        figure;
+        i_plot  = 1;
+        for i_e = 1:n_E
+        for i_z = 1:n_Z
+            subplot(n_E,n_Z,i_plot);
+            plot(vA_Grid,OC_E(:,i_e,i_z),'linewidth',2)
+            xlim([min(vA_Grid) max(vA_Grid)]); ylim([-1,2]);
+            %title('OC E')
+            i_plot = i_plot +1 ;
+        end
+        end
+        set(gcf,'color','w')
+        file_name_eps = ['OC_E_',model,'.eps'] ;
+        file_name_fig = ['OC_E_',model,'.fig'] ;
+        print('-depsc',file_name_eps)
+        savefig(file_name_fig)
     
 
 

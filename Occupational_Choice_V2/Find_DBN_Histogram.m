@@ -120,10 +120,15 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
                     ))) /N_supply-1 ) ;
         options = optimoptions('fsolve','Display','off');
         [w_new,err,exitflag] = fsolve(f, w ,options);
-% disp([err N_supply sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:)))])
+        
+        N_demand = sum(sum(sum( mDBN_E .* ...
+            (mmu*AA*mZ_Grid.*(  min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w_new))^mmu).^(1/(1-aalpha-mmu)) )  ).^aalpha/((1+tau_n)*w_new)).^(1/(1-mmu)) ...
+                    ))) ;
+        
+% disp([err N_supply N_demand sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:))) w w_new])
         % Residual
-        % residual = w_new/w-1 ;
-        residual = (w_new/w-1)^2 ;
+        % residual = (w_new-w) ;
+        residual = abs(w_new-w) ;
         % disp([w w_new])
     
     %% Optional output
