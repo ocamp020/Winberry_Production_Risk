@@ -130,8 +130,8 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
         
 % disp([err N_supply N_demand sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:))) w w_new])
         % Residual
-        % residual = (w_new-w) ;
-        residual = abs(N_supply-N_demand) ;
+        residual = (N_supply-N_demand) ;
+        % residual = abs(N_supply-N_demand) ;
         % disp([w w_new])
     
     %% Optional output
