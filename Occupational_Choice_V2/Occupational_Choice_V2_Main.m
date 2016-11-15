@@ -14,7 +14,7 @@ diary('Log_Occupational_Choice.txt')
 %% Stationary Equilibrium (Histogram Method and discrete VFI)
 
     t0 = tic;
-    x_0 = [0.6];
+    x_0 = [0.55];
 %     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
 %     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
     options = optimset('Display','iter','TolFun',1e-03);
@@ -22,7 +22,7 @@ diary('Log_Occupational_Choice.txt')
     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
 
     r_ben = r    ;
-    w_ben = x(2) ; 
+    w_ben = x(1) ; 
     
     Mat = [r_ben w_ben] ; 
     Mat = [{'Aggregate Prices',' ';'Interest Rate','Wage'};num2cell(Mat)];
@@ -69,7 +69,7 @@ diary('Log_Occupational_Choice.txt')
     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
 
     r_exp = r    ;
-    w_exp = x(2) ; 
+    w_exp = x(1) ; 
 
     Mat = [r_exp w_exp] ; 
     Mat = [{'Aggregate Prices',' ';'Interest Rate','Wage'};num2cell(Mat)];
@@ -123,7 +123,7 @@ diary('Log_Occupational_Choice.txt')
     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
 
     r_exp2 = r    ;
-    w_exp2 = x(2) ; 
+    w_exp2 = x(1) ; 
 
     Mat = [r_exp2 w_exp2] ; 
     Mat = [{'Aggregate Prices',' ';'Interest Rate','Wage'};num2cell(Mat)];
