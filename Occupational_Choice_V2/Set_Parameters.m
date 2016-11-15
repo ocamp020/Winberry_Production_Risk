@@ -13,8 +13,8 @@ ssigma  = 1         ; % coefficient of relative risk aversion
 aaBar   = 0.0001    ; % borrowing constraint
 
 % Technology
-aalpha  = 0.36      ; % capital share
-mmu     = 0.60      ; % Labor share
+aalpha  = 0.28      ; % capital share
+mmu     = 0.57      ; % Labor share
 ddelta  = 0.025     ; % depreciation rate (annual calibration)
 llambda = 1.50      ; % Financial constraint 
 AA      = 1.0       ; % TFP - Z scale

@@ -9,7 +9,7 @@ global mmu ddelta llambda tau_k tau_n AA aalpha...
 
 %% Capital and Profits and Earnings
 
-    K  = min( max( 0 , llambda*mA_grid ) , ...
+    K  = min( max( 0 , llambda*mA_Grid ) , ...
                (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w))^mmu).^(1/(1-aalpha-mmu)) )  ;
     N  = (mmu*AA*mZ_Grid.*K.^aalpha/((1+tau_n)*w)).^(1/(1-mmu)) ;
     Pr = AA*mZ_Grid.*K.^aalpha.*N.^mmu - (r+ddelta)*K - (1+tau_n)*w*N;
@@ -239,7 +239,7 @@ global mmu ddelta llambda tau_k tau_n AA aalpha...
     A_ss = vA_Grid'*sum(sum(mDBN_W+mDBN_E,3),2) ;
     K_ss = sum(sum(sum( K.*mDBN_E )))  ;
     N_ss = sum(sum(sum( N.*mDBN_E )))  ;
-    Y_ss = sum(sum(sum( AA*mZ_Grid.*K^(aalpha)*N^mmu.*mDBN_E ))) ;   
+    Y_ss = sum(sum(sum( AA*mZ_Grid.*K.^(aalpha).*N.^mmu.*mDBN_E ))) ;   
     
     Mat = [A_ss K_ss N_ss Y_ss] ; 
     Mat = [{'Aggregate Variables',' ',' ',' ';'Assets','Capital','Labor','Output'};num2cell(Mat)];

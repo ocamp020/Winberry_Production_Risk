@@ -120,7 +120,7 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
                     ))) /N_supply-1 ) ;
         options = optimoptions('fsolve','Display','off');
         [w_new,err,exitflag] = fsolve(f, w ,options);
-disp([err N_supply sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:)))])
+% disp([err N_supply sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:)))])
         % Residual
         % residual = w_new/w-1 ;
         residual = (w_new/w-1)^2 ;
