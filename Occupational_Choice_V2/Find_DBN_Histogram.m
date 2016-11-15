@@ -112,23 +112,26 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
     %% Update prices 
         % Labor supply and new taxes
         N_supply = sum( vE_Grid(2:n_E).*squeeze(sum(sum(mDBN_W(:,2:n_E,:),3),1))' ) ;
+        N_demand = sum(sum(sum( mDBN_E .* ...
+                    (mmu*AA*mZ_Grid.*(  min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w))^mmu).^(1/(1-aalpha-mmu)) )  ).^aalpha/((1+tau_n)*w)).^(1/(1-mmu)) ...
+                    ))) ;
         tau_n = vE_Grid(1)*sum(sum(mDBN_W(:,1,:))) / N_supply ; 
         
-        % Update Wage
-        f = @(W) ( sum(sum(sum( mDBN_E .* ...
-            (mmu*AA*mZ_Grid.*(  min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*W))^mmu).^(1/(1-aalpha-mmu)) )  ).^aalpha/((1+tau_n)*W)).^(1/(1-mmu)) ...
-                    ))) /N_supply-1 ) ;
-        options = optimoptions('fsolve','Display','off');
-        [w_new,err,exitflag] = fsolve(f, w ,options);
-        
-        N_demand = sum(sum(sum( mDBN_E .* ...
-            (mmu*AA*mZ_Grid.*(  min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w_new))^mmu).^(1/(1-aalpha-mmu)) )  ).^aalpha/((1+tau_n)*w_new)).^(1/(1-mmu)) ...
-                    ))) ;
+%         % Update Wage
+%         f = @(W) ( sum(sum(sum( mDBN_E .* ...
+%             (mmu*AA*mZ_Grid.*(  min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*W))^mmu).^(1/(1-aalpha-mmu)) )  ).^aalpha/((1+tau_n)*W)).^(1/(1-mmu)) ...
+%                     ))) /N_supply-1 ) ;
+%         options = optimoptions('fsolve','Display','off');
+%         [w_new,err,exitflag] = fsolve(f, w ,options);
+%         
+%         N_demand = sum(sum(sum( mDBN_E .* ...
+%             (mmu*AA*mZ_Grid.*(  min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w_new))^mmu).^(1/(1-aalpha-mmu)) )  ).^aalpha/((1+tau_n)*w_new)).^(1/(1-mmu)) ...
+%                     ))) ;
         
 % disp([err N_supply N_demand sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:))) w w_new])
         % Residual
         % residual = (w_new-w) ;
-        residual = abs(w_new-w) ;
+        residual = abs(N_supply-N_demand) ;
         % disp([w w_new])
     
     %% Optional output
