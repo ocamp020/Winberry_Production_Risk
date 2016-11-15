@@ -84,12 +84,12 @@ diary('Log_Occupational_Choice.txt')
     disp('price residual'); disp(price_residual_exp);
     
     
-    [A_exp,X_exp,N_exp,Y_exp,Earnings_W_exp,Earnings_E_exp] = ...
+    [A_exp,K_exp,N_exp,Y_exp,Earnings_W_exp,Earnings_E_exp] = ...
         Graphs_Tables('exp',r_exp,w_exp,mDBN_W_exp,mDBN_E_exp,mAp_W_exp,mAp_E_exp,OC_W_exp,OC_E_exp,V_W_exp,V_E_exp,Transition_exp) ;
     
     % Aggregate variables difference
-    Mat = 100*[A_exp/A_ben-1 X_exp/X_ben-1  N_exp/N_ben-1  Y_exp/Y_ben-1];
-    Mat = [{'% Change'} cell(1,3);{'A','X','N','Y'};num2cell(Mat)] ;
+    Mat = 100*[A_exp/A_ben-1 K_exp/K_ben-1  N_exp/N_ben-1  Y_exp/Y_ben-1];
+    Mat = [{'% Change'} cell(1,3);{'A','K','N','Y'};num2cell(Mat)] ;
     disp(' '); disp(Mat); disp(' ');
     
     Mat = 100*[(1+r_exp)/(1+r_ben)-1 w_exp/w_ben-1] ;
@@ -138,12 +138,12 @@ diary('Log_Occupational_Choice.txt')
     disp('price residual'); disp(price_residual_exp2);
     
     
-    [A_exp2,X_exp2,N_exp2,Y_exp2,Earnings_W_exp2,Earnings_E_exp2] = ...
+    [A_exp2,K_exp2,N_exp2,Y_exp2,Earnings_W_exp2,Earnings_E_exp2] = ...
         Graphs_Tables('exp2',r_exp2,w_exp2,mDBN_W_exp2,mDBN_E_exp2,mAp_W_exp2,mAp_E_exp2,OC_W_exp2,OC_E_exp2,V_W_exp2,V_E_exp2,Transition_exp2) ;
     
     % Aggregate variables difference
-    Mat = 100*[A_exp2/A_ben-1 X_exp2/X_ben-1  N_exp2/N_ben-1  Y_exp2/Y_ben-1];
-    Mat = [{'% Change'} cell(1,3);{'A','X','N','Y'};num2cell(Mat)] ;
+    Mat = 100*[A_exp2/A_ben-1 K_exp2/K_ben-1  N_exp2/N_ben-1  Y_exp2/Y_ben-1];
+    Mat = [{'% Change'} cell(1,3);{'A','K','N','Y'};num2cell(Mat)] ;
     disp(' '); disp(Mat); disp(' ');
     
     Mat = 100*[(1+r_exp2)/(1+r_ben)-1 w_exp2/w_ben-1] ;

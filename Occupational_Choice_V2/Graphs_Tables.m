@@ -2,7 +2,7 @@
 % Graphs And Tables
 % Juan David Herreno & Sergio Ocampo (2016)
 
-function [A_ss,X_ss,N_ss,Y_ss,Earnings_W,Earnings_E] = Graphs_Tables(model,r,w,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition)
+function [A_ss,K_ss,N_ss,Y_ss,Earnings_W,Earnings_E] = Graphs_Tables(model,r,w,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition)
 
 global mmu ddelta llambda tau_k tau_n AA aalpha...
        n_A n_E n_Z vA_Grid vE_Grid mA_Grid mZ_Grid mE_Grid
