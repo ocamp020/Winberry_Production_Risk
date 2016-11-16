@@ -10,57 +10,66 @@ diary('Log_Occupational_Choice.txt')
 %% Set up problem 
 
     Set_Parameters;
+    
+%% Choose solver
+
+solver = 'fzero' ;
 
 %% Stationary Equilibrium (Histogram Method and discrete VFI)
 
+%     % Graph of excess supply function
+%         w_grid = linspace(0.41,0.42,100) ;
+%         for i=1:numel(w_grid)
+%             es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
+%             disp([i,w_grid(i),es(i)])
+%         end 
+%         figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
+
+
     t0 = tic;
     x_0 = [0.416914281250000];
-%     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
-%     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
-%     options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
-%     [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x),x_0,options);
-%     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
     
-    % Graph of excess supply function
-%     w_grid = linspace(0.41,0.42,100) ;
-%     for i=1:numel(w_grid)
-%         es(i) = Find_DBN_Histogram(w_grid(i)) ;
-%         disp([i,w_grid(i),es(i)])
-%     end 
-%     figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
-
-    % fzero
-    options = optimset('Display','iter','TolFun',5e-04);
-    [x,err] = fzero(@(x)Find_DBN_Histogram(x),0.50,options);
-  
-
-    % Bisection 
-%     w_low  = 0.41 ; 
-%     w_high = 0.42 ; 
-%     excess_supply_low  = Find_DBN_Histogram(w_low)  ; 
-%     excess_supply_high = Find_DBN_Histogram(w_high) ;
-%     disp('Starting Bisection for Equilibrium Wage')
-%     disp({'iter','w_low','w','w_high','excess_supply','w_dist'})
-%     if excess_supply_low*excess_supply_high<0 
-%         excess_supply = 1 ;
-%         iter = 0 ;
-%         while abs(excess_supply)>5e-4 && iter<maxIterations
-%             w = (w_low+w_high)/2 ;
-%             excess_supply = Find_DBN_Histogram(w)  ; 
-%             if excess_supply>0 
-%                 w_high = w ; 
-%             else 
-%                 w_low  = w ;
-%             end 
-%             iter = iter + 1 ;
-%             disp(num2cell([iter w_low w w_high excess_supply w_high-w_low]))
-%         end 
-%         x = w ;
-%     else
-%         disp('Equilibrium not bracketed')
-%         return
-%     end 
-    
+    if strcmp(solver,'fsolve')
+        options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
+        [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'fminsearch')
+        options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
+        [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'fzero')
+        options = optimset('Display','iter','TolFun',5e-04);
+        [x,err] = fzero(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'bisection')
+        w_low  = 0.41 ; 
+        w_high = 0.42 ; 
+        excess_supply_low  = Find_DBN_Histogram(w_low)  ; 
+        excess_supply_high = Find_DBN_Histogram(w_high) ;
+        disp('Starting Bisection for Equilibrium Wage')
+        disp({'iter','w_low','w','w_high','excess_supply','w_dist'})
+        if excess_supply_low*excess_supply_high<0 
+            excess_supply = 1 ;
+            w_dist        = 1 ;
+            iter = 0 ;
+            while abs(excess_supply)>5e-4 && iter<maxIterations && w_dist>1e-10
+                w = (w_low+w_high)/2 ;
+                excess_supply = Find_DBN_Histogram(w)  ; 
+                if excess_supply>0 
+                    w_high = w ; 
+                else 
+                    w_low  = w ;
+                end 
+                iter   = iter + 1     ;
+                w_dist = w_high-w_low ;
+                disp(num2cell([iter w_low w w_high excess_supply w_dist]))
+            end 
+            x = w ;
+        else
+            disp('Equilibrium not bracketed')
+            return
+        end 
+    else
+        error('Invalid solver. It must be fsole, fminsearch, fzero or bisection')
+    end  
+    fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)    
 
     r_ben = r    ;
     w_ben = x(1) ; 
@@ -75,7 +84,7 @@ diary('Log_Occupational_Choice.txt')
 
 %% Distribution, Value and Policy Functions 
 
-    [price_residual,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition] = Find_DBN_Histogram(x) ;
+    [price_residual,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition] = Find_DBN_Histogram(x,'bisection') ;
     disp('price residual'); disp(price_residual);
     
     [A_ben,K_ben,N_ben,Y_ben,Earnings_W_ben,Earnings_E_ben] = ...
@@ -100,53 +109,60 @@ return
 
 
 
-    % Solve the model
-    t0 = tic;
-    x_0 = x ;
-%     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
-%     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
-%     options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
-%     [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x),x_0,options);
-%     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
-
 %     % Graph of excess supply function
-%     w_grid = linspace(0.40,0.42,100) ;
-%     for i=1:numel(w_grid)
-%         es(i) = Find_DBN_Histogram(w_grid(i)) ;
-%         disp([i,w_grid(i),es(i)])
-%     end 
-%     figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
-% return
-% 
-% 
-%     % Bisection 
-%     w_low  = 0.4 ; 
-%     w_high = 0.42 ; 
-%     excess_supply_low  = Find_DBN_Histogram(w_low)  ; 
-%     excess_supply_high = Find_DBN_Histogram(w_high) ;
-%     disp('Starting Bisection for Equilibrium Wage')
-%     disp({'iter','w_low','w','w_high','excess_supply','w_dist'})
-%     if excess_supply_low*excess_supply_high<0 
-%         excess_supply = 1 ;
-%         iter = 0 ;
-%         while abs(excess_supply)>5e-4 && iter<maxIterations
-%             w = (w_low+w_high)/2 ;
-%             excess_supply = Find_DBN_Histogram(w)  ; 
-%             if excess_supply>0 
-%                 w_high = w ; 
-%             else 
-%                 w_low  = w ;
-%             end 
-%             iter = iter + 1 ;
-%             disp(num2cell([iter w_low w w_high excess_supply w_high-w_low]))
+%         w_grid = linspace(0.41,0.42,100) ;
+%         for i=1:numel(w_grid)
+%             es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
+%             disp([i,w_grid(i),es(i)])
 %         end 
-%     else
-%         disp('Equilibrium not bracketed')
-%         return
-%     end 
+%         figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
 
-    options = optimset('Display','iter','TolFun',5e-04);
-    [x,err] = fzero(@(x)Find_DBN_Histogram(x),0.42,options);
+
+    t0 = tic;
+    x_0 = x;
+    
+    if strcmp(solver,'fsolve')
+        options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
+        [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'fminsearch')
+        options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
+        [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'fzero')
+        options = optimset('Display','iter','TolFun',5e-04);
+        [x,err] = fzero(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'bisection')
+        w_low  = 0.41 ; 
+        w_high = 0.42 ; 
+        excess_supply_low  = Find_DBN_Histogram(w_low)  ; 
+        excess_supply_high = Find_DBN_Histogram(w_high) ;
+        disp('Starting Bisection for Equilibrium Wage')
+        disp({'iter','w_low','w','w_high','excess_supply','w_dist'})
+        if excess_supply_low*excess_supply_high<0 
+            excess_supply = 1 ;
+            w_dist        = 1 ;
+            iter = 0 ;
+            while abs(excess_supply)>5e-4 && iter<maxIterations && w_dist>1e-10
+                w = (w_low+w_high)/2 ;
+                excess_supply = Find_DBN_Histogram(w)  ; 
+                if excess_supply>0 
+                    w_high = w ; 
+                else 
+                    w_low  = w ;
+                end 
+                iter   = iter + 1     ;
+                w_dist = w_high-w_low ;
+                disp(num2cell([iter w_low w w_high excess_supply w_dist]))
+            end 
+            x = w ;
+        else
+            disp('Equilibrium not bracketed')
+            return
+        end 
+    else
+        error('Invalid solver. It must be fsole, fminsearch, fzero or bisection')
+    end  
+    fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)    
+
     
     r_exp = r    ;
     w_exp = x(1) ; 
@@ -160,7 +176,7 @@ return
     disp(' '); disp(Mat); disp(' ');
 
     % Get Distribution, Value and Policy Functions
-    [price_residual_exp,mDBN_W_exp,mDBN_E_exp,mAp_W_exp,mAp_E_exp,OC_W_exp,OC_E_exp,V_W_exp,V_E_exp,Transition_exp] = Find_DBN_Histogram(x) ;
+    [price_residual_exp,mDBN_W_exp,mDBN_E_exp,mAp_W_exp,mAp_E_exp,OC_W_exp,OC_E_exp,V_W_exp,V_E_exp,Transition_exp] = Find_DBN_Histogram(x,'bisection') ;
     disp('price residual'); disp(price_residual_exp);
     
     
@@ -194,16 +210,60 @@ return
     mE_Grid = repmat(vE_Grid',[n_A 1 n_Z]);
 
     % Solve the model
+%     % Graph of excess supply function
+%         w_grid = linspace(0.41,0.42,100) ;
+%         for i=1:numel(w_grid)
+%             es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
+%             disp([i,w_grid(i),es(i)])
+%         end 
+%         figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
+
+
     t0 = tic;
-    x_0 = x ;
-%     options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
-%     [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x),x_0,options);
-%     options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
-%     [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x),x_0,options);
-%     fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)
+    x_0 = x;
     
-    options = optimset('Display','iter','TolFun',5e-04);
-    [x,err] = fzero(@(x)Find_DBN_Histogram(x),0.42,options);
+    if strcmp(solver,'fsolve')
+        options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
+        [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'fminsearch')
+        options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
+        [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'fzero')
+        options = optimset('Display','iter','TolFun',5e-04);
+        [x,err] = fzero(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+    elseif strcmp(solver,'bisection')
+        w_low  = 0.41 ; 
+        w_high = 0.42 ; 
+        excess_supply_low  = Find_DBN_Histogram(w_low)  ; 
+        excess_supply_high = Find_DBN_Histogram(w_high) ;
+        disp('Starting Bisection for Equilibrium Wage')
+        disp({'iter','w_low','w','w_high','excess_supply','w_dist'})
+        if excess_supply_low*excess_supply_high<0 
+            excess_supply = 1 ;
+            w_dist        = 1 ;
+            iter = 0 ;
+            while abs(excess_supply)>5e-4 && iter<maxIterations && w_dist>1e-10
+                w = (w_low+w_high)/2 ;
+                excess_supply = Find_DBN_Histogram(w)  ; 
+                if excess_supply>0 
+                    w_high = w ; 
+                else 
+                    w_low  = w ;
+                end 
+                iter   = iter + 1     ;
+                w_dist = w_high-w_low ;
+                disp(num2cell([iter w_low w w_high excess_supply w_dist]))
+            end 
+            x = w ;
+        else
+            disp('Equilibrium not bracketed')
+            return
+        end 
+    else
+        error('Invalid solver. It must be fsole, fminsearch, fzero or bisection')
+    end  
+    fprintf('Done! Time to compute: %2.2f seconds, error=%2.2d \n\n',toc(t0),err)    
+
 
     r_exp2 = r    ;
     w_exp2 = x(1) ; 
@@ -217,7 +277,7 @@ return
     disp(' '); disp(Mat); disp(' ');
 
     % Get Distribution, Value and Policy Functions
-    [price_residual_exp2,mDBN_W_exp2,mDBN_E_exp2,mAp_W_exp2,mAp_E_exp2,OC_W_exp2,OC_E_exp2,V_W_exp2,V_E_exp2,Transition_exp2] = Find_DBN_Histogram(x) ;
+    [price_residual_exp2,mDBN_W_exp2,mDBN_E_exp2,mAp_W_exp2,mAp_E_exp2,OC_W_exp2,OC_E_exp2,V_W_exp2,V_E_exp2,Transition_exp2] = Find_DBN_Histogram(x,'bisection') ;
     disp('price residual'); disp(price_residual_exp2);
     
     

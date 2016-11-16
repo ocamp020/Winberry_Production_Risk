@@ -1,0 +1,37 @@
+vEGrid vEInvariant_W vE_Invariant_E
+    0.0100    0.1444    0.1760
+    1.0000    0.7610    0.7175
+   10.0000    0.0946    0.1065
+
+vZGrid vZInvariant
+    0.6599    0.0001
+    0.7580    0.0144
+    0.8706    0.2189
+    1.0000    0.5332
+    1.1486    0.2189
+    1.3193    0.0144
+    1.5154    0.0001
+
+ 
+ Iteration   Func-count     min f(x)         Procedure
+     0            1          1.60522         
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Discrete_VFI>Utility', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Discrete_VFI.m', 103)" style="font-weight:bold">Discrete_VFI>Utility</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Discrete_VFI.m',103,0)">line 103</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Discrete_VFI', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Discrete_VFI.m', 69)" style="font-weight:bold">Discrete_VFI</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Discrete_VFI.m',69,0)">line 69</a>)
+        mVE_new = max(  Utility(mC_E) + bbeta*ggamma*E_V_E , [] , 4 );
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Find_DBN_Histogram', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Find_DBN_Histogram.m', 22)" style="font-weight:bold">Find_DBN_Histogram</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Find_DBN_Histogram.m',22,0)">line 22</a>)
+    [Ap_W_VFI,Ap_E_VFI,OC_W_VFI,OC_E_VFI,VW_VFI,VE_VFI] = Discrete_VFI(r,w) ;
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Occupational_Choice_V2_Main>@(x)Find_DBN_Histogram(x)')" style="font-weight:bold">Occupational_Choice_V2_Main>@(x)Find_DBN_Histogram(x)</a>
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fminsearch', '/Applications/MATLAB_R2015b.app/toolbox/matlab/optimfun/fminsearch.p', 253)" style="font-weight:bold">fminsearch</a> (<a href="matlab: opentoline('/Applications/MATLAB_R2015b.app/toolbox/matlab/optimfun/fminsearch.p',253,0)">line 253</a>)
+    x(:) = y; f = funfcn(x,varargin{:});
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Occupational_Choice_V2_Main', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Occupational_Choice_V2_Main.m', 21)" style="font-weight:bold">Occupational_Choice_V2_Main</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Occupational_Choice_V2_Main.m',21,0)">line 21</a>)
+    [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x),x_0,options);
+} 
+close all
+clear all
+clc

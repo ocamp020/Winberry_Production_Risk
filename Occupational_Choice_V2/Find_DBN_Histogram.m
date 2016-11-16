@@ -2,7 +2,7 @@
 % Find Stationary Distribution with the Histogram Method
 % Juan David Herreno & Sergio Ocampo (2016)
 
-function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out,mTransition_out] = Find_DBN_Histogram(x)
+function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out,mTransition_out] = Find_DBN_Histogram(x,solver)
 
 
 %% Initialization (global variables)
@@ -109,13 +109,13 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
     mDBN_E = reshape(full(G_E),n_A,n_E,n_Z);   
         
         
-    %% Update prices 
-        % Labor supply and new taxes
-        N_supply = sum( vE_Grid(2:n_E).*squeeze(sum(sum(mDBN_W(:,2:n_E,:),3),1))' ) ;
-        N_demand = sum(sum(sum( mDBN_E .* ...
-                    (mmu*AA*mZ_Grid.*(  min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w))^mmu).^(1/(1-aalpha-mmu)) )  ).^aalpha/((1+tau_n)*w)).^(1/(1-mmu)) ...
-                    ))) ;
-        % tau_n = vE_Grid(1)*sum(sum(mDBN_W(:,1,:))) / N_supply ; 
+%% Update prices 
+    % Labor supply and new taxes
+    K_demand = min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w))^mmu).^(1/(1-aalpha-mmu)) ) ;
+    N_supply = sum( vE_Grid(2:n_E).*squeeze(sum(sum(mDBN_W(:,2:n_E,:),3),1))' ) ;
+    N_demand = sum(sum(sum( mDBN_E .* (mmu*AA*mZ_Grid.*K_demand.^aalpha/((1+tau_n)*w)).^(1/(1-mmu)) ))) ;
+    
+    % tau_n = vE_Grid(1)*sum(sum(mDBN_W(:,1,:))) / N_supply ; 
         
 %         % Update Wage
 %         f = @(W) ( sum(sum(sum( mDBN_E .* ...
@@ -129,43 +129,54 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
 %                     ))) ;
         
 % disp([err N_supply N_demand sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:))) w w_new])
-        % Residual
-        residual = (N_supply/N_demand-1) ;
-        % residual = abs(N_supply-N_demand) ;
+
+%% Residual
+
+        if strcmp(solver,'fsolve')
+            residual = (N_supply/N_demand-1) ;
+        elseif strcmp(solver,'fminsearch')
+            residual = abs(N_supply-N_demand) ;
+        elseif strcmp(solver,'fzero')
+            residual = (N_supply-N_demand) ;
+        elseif strcmp(solver,'bisection')
+            residual = (N_supply-N_demand) ;
+        else
+            error('Invalid solver. It must be fsole, fminsearch, fzero or bisection')
+        end
         % disp([w w_new])
     
-    %% Optional output
-        if nargout>1
-            mDBN_W_out = mDBN_W ;
-            mDBN_E_out = mDBN_E ;
-            if nargout>3
-                mAp_W_out = Ap_W_VFI ;
-                mAp_E_out = Ap_E_VFI ;
-                OC_W_out  = OC_W_VFI ;
-                OC_E_out  = OC_E_VFI ;
-                VW_out    = VW_VFI   ;
-                VE_out    = VE_VFI   ;
-                
-                mTransition_out = NaN(3,3) ; 
-                U_ind = [ repmat(kron([1 ; 0 ; 0],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
-                W_ind = [ repmat(kron([0 ; 1 ; 1],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
-                E_ind = [zeros(n_State,1) ; ones(n_State,1)]==1 ;
-                % From Unemployment
-                mTransition_out(1,1) = sum(sum(mTransition(U_ind,U_ind),2).*G(U_ind))/sum(G(U_ind)) ;
-                mTransition_out(1,2) = sum(sum(mTransition(U_ind,W_ind),2).*G(U_ind))/sum(G(U_ind)) ;
-                mTransition_out(1,3) = sum(sum(mTransition(U_ind,E_ind),2).*G(U_ind))/sum(G(U_ind)) ;
-                % From Employment
-                mTransition_out(2,1) = sum(sum(mTransition(W_ind,U_ind),2).*G(W_ind))/sum(G(W_ind)) ;
-                mTransition_out(2,2) = sum(sum(mTransition(W_ind,W_ind),2).*G(W_ind))/sum(G(W_ind)) ;
-                mTransition_out(2,3) = sum(sum(mTransition(W_ind,E_ind),2).*G(W_ind))/sum(G(W_ind)) ;
-                % From Unemployment
-                mTransition_out(3,1) = sum(sum(mTransition(E_ind,U_ind),2).*G(E_ind))/sum(G(E_ind)) ;
-                mTransition_out(3,2) = sum(sum(mTransition(E_ind,W_ind),2).*G(E_ind))/sum(G(E_ind)) ;
-                mTransition_out(3,3) = sum(sum(mTransition(E_ind,E_ind),2).*G(E_ind))/sum(G(E_ind)) ;
-                
-                mTransition_out = 100*mTransition_out ;
-            end 
+%% Optional output
+    if nargout>1
+        mDBN_W_out = mDBN_W ;
+        mDBN_E_out = mDBN_E ;
+        if nargout>3
+            mAp_W_out = Ap_W_VFI ;
+            mAp_E_out = Ap_E_VFI ;
+            OC_W_out  = OC_W_VFI ;
+            OC_E_out  = OC_E_VFI ;
+            VW_out    = VW_VFI   ;
+            VE_out    = VE_VFI   ;
+
+            mTransition_out = NaN(3,3) ; 
+            U_ind = [ repmat(kron([1 ; 0 ; 0],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
+            W_ind = [ repmat(kron([0 ; 1 ; 1],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
+            E_ind = [zeros(n_State,1) ; ones(n_State,1)]==1 ;
+            % From Unemployment
+            mTransition_out(1,1) = sum(sum(mTransition(U_ind,U_ind),2).*G(U_ind))/sum(G(U_ind)) ;
+            mTransition_out(1,2) = sum(sum(mTransition(U_ind,W_ind),2).*G(U_ind))/sum(G(U_ind)) ;
+            mTransition_out(1,3) = sum(sum(mTransition(U_ind,E_ind),2).*G(U_ind))/sum(G(U_ind)) ;
+            % From Employment
+            mTransition_out(2,1) = sum(sum(mTransition(W_ind,U_ind),2).*G(W_ind))/sum(G(W_ind)) ;
+            mTransition_out(2,2) = sum(sum(mTransition(W_ind,W_ind),2).*G(W_ind))/sum(G(W_ind)) ;
+            mTransition_out(2,3) = sum(sum(mTransition(W_ind,E_ind),2).*G(W_ind))/sum(G(W_ind)) ;
+            % From Unemployment
+            mTransition_out(3,1) = sum(sum(mTransition(E_ind,U_ind),2).*G(E_ind))/sum(G(E_ind)) ;
+            mTransition_out(3,2) = sum(sum(mTransition(E_ind,W_ind),2).*G(E_ind))/sum(G(E_ind)) ;
+            mTransition_out(3,3) = sum(sum(mTransition(E_ind,E_ind),2).*G(E_ind))/sum(G(E_ind)) ;
+
+            mTransition_out = 100*mTransition_out ;
         end 
+    end 
 
 
 
