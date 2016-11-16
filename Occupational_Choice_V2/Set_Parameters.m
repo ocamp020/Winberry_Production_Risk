@@ -20,14 +20,14 @@ llambda = 1.50      ; % Financial constraint
 AA      = 1.0       ; % TFP - Z scale
 
 % Labor frictions
-b       = 0.1       ; % Unemployement benefits: Replacement rate
+b       = 0.09      ; % Unemployement benefits: Replacement rate
 jfr_W   = 0.30      ; % Job finding rate from unemployment
 jdr_W   = 0.04      ; % Job destruction rate
 jfr_E   = 0.30      ; % Job finding rate from unemployment
 jdr_E   = 0.04      ; % Job destruction rate
 
 % Taxes 
-tau_n = 0.2 ; % Payroll taxes
+tau_n = 0.0 ; % Payroll taxes
 tau_k = 0.2 ; % Capital income taxes
 
 % Interest Rate
@@ -42,7 +42,7 @@ global n_E n_Z n_A n_State ...
 	   vZ_Grid mZ_Grid mZ_Transition vZ_Invariant vKappa mKappa
 	
 % Order of approximation
-n_E     = 3   ; % number of gridpoints for labor productivity
+n_E     = 4   ; % number of gridpoints for labor productivity
 n_Z     = 7   ; % number of gridpoints for entrepreneurial productivity
 n_A     = 150  ; % number of gridpoints for assets
 n_State = n_E * n_Z * n_A;
@@ -85,9 +85,9 @@ else
                      jdr_E*ones(n_E-1,1) (1-jdr_E)*mE_Transition];
 end 
     [vE_Invariant_W,~]  = eig(mE_Transition_W') ;
-    vE_Invariant_W      = vE_Invariant_W(:,1)/sum(vE_Invariant_W(:,1)) ;
+    vE_Invariant_W      = vE_Invariant_W(:,2)/sum(vE_Invariant_W(:,2)) ;
     [vE_Invariant_E,~]  = eig(mE_Transition_E') ;
-    vE_Invariant_E      = vE_Invariant_E(:,1)/sum(vE_Invariant_E(:,1)) ;
+    vE_Invariant_E      = vE_Invariant_E(:,2)/sum(vE_Invariant_E(:,2)) ;
     
     % Matrix for VFI
     mE_Transition_W_VFI = NaN(n_A,n_E,n_Z,n_A,n_E) ; 
