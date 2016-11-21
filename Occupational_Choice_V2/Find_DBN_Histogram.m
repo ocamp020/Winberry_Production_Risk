@@ -2,7 +2,7 @@
 % Find Stationary Distribution with the Histogram Method
 % Juan David Herreno & Sergio Ocampo (2016)
 
-function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,VW_out,VE_out,mTransition_out] = Find_DBN_Histogram(x,solver)
+function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E1_out,OC_E2_out,VW_out,VE_out,mTransition_out] = Find_DBN_Histogram(x,solver)
 
 
 %% Initialization (global variables)
@@ -164,8 +164,8 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
 %             (mmu*AA*mZ_Grid.*(  min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w_new))^mmu).^(1/(1-aalpha-mmu)) )  ).^aalpha/((1+tau_n)*w_new)).^(1/(1-mmu)) ...
 %                     ))) ;
         
-% disp([err N_supply N_demand sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:))) w w_new])
-
+%disp([N_supply N_demand sum(sum(mDBN_W(:,2,:))) sum(sum(mDBN_W(:,3,:))) w w_new])
+disp([N_supply N_demand])
 %% Residual
 
         if strcmp(solver,'fsolve')
@@ -186,12 +186,13 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
         mDBN_W_out = mDBN_W ;
         mDBN_E_out = mDBN_E ;
         if nargout>3
-            mAp_W_out = Ap_W_VFI ;
-            mAp_E_out = Ap_E_VFI ;
-            OC_W_out  = OC_W_VFI ;
-            OC_E_out  = OC_E_VFI ;
-            VW_out    = VW_VFI   ;
-            VE_out    = VE_VFI   ;
+            mAp_W_out = Ap_W_VFI  ;
+            mAp_E_out = Ap_E_VFI  ;
+            OC_W_out  = OC_W_VFI  ;
+            OC_E1_out = OC_E1_VFI ;
+            OC_E2_out = OC_E2_VFI ;
+            VW_out    = VW_VFI    ;
+            VE_out    = VE_VFI    ;
 
             mTransition_out = NaN(3,3) ; 
             U_ind = [ repmat(kron([1 ; 0 ; 0],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;

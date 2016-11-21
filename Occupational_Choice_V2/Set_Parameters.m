@@ -20,10 +20,10 @@ llambda = 1.50      ; % Financial constraint
 AA      = 1.0       ; % TFP - Z scale
 
 % Labor frictions
-b       = 0.09      ; % Unemployement benefits: Replacement rate
+b       = 0.01      ; % Unemployement benefits: Replacement rate
 jfr_W   = 0.30      ; % Job finding rate from unemployment
 jdr_W   = 0.04      ; % Job destruction rate
-jfr_E   = 0.30      ; % Job finding rate from unemployment
+jfr_E   = 0.10      ; % Job finding rate from unemployment
 jdr_E   = 0.04      ; % Job destruction rate
 
 % Taxes 
@@ -82,7 +82,7 @@ else
     vE_Grid = [b ; 1 ; 10 ; 20 ] ;
     mE_Transition_W = [1-jfr_W , jfr_W , zeros(1,n_E-2);
                      jdr_W*ones(n_E-1,1) (1-jdr_W)*mE_Transition];
-    mE_Transition_E = [0 ; vE_Invariant] ;
+    mE_Transition_E = [0 ; 0.8 ; 0.2 ; 0.0] ;
 end 
     [vE_Invariant_W,~]  = eig(mE_Transition_W') ;
     vE_Invariant_W      = vE_Invariant_W(:,2)/sum(vE_Invariant_W(:,2)) ;

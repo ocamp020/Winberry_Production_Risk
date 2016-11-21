@@ -17,17 +17,17 @@ solver = 'fzero' ;
 
 %% Stationary Equilibrium (Histogram Method and discrete VFI)
 
-%     % Graph of excess supply function
-%         w_grid = linspace(0.41,0.42,100) ;
-%         for i=1:numel(w_grid)
-%             es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
-%             disp([i,w_grid(i),es(i)])
-%         end 
-%         figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
+    % Graph of excess supply function
+        w_grid = linspace(0.8,1.0,100) ;
+        for i=1:numel(w_grid)
+            es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
+            disp([i,w_grid(i),es(i)])
+        end 
+        figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
 
 
     t0 = tic;
-    x_0 = [0.416914281250000];
+    x_0 = [2.8];
     
     if strcmp(solver,'fsolve')
         options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
@@ -84,9 +84,9 @@ solver = 'fzero' ;
 
 %% Distribution, Value and Policy Functions 
 
-    [price_residual,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition] = Find_DBN_Histogram(x,'bisection') ;
+    [price_residual,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E1,OC_E2,V_W,V_E,Transition] = Find_DBN_Histogram(x,'bisection') ;
     disp('price residual'); disp(price_residual);
-    
+return    
     [A_ben,K_ben,N_ben,Y_ben,Earnings_W_ben,Earnings_E_ben] = ...
         Graphs_Tables('ben',r_ben,w_ben,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition) ;
  
