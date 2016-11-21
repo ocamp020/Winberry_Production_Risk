@@ -36,10 +36,10 @@ r     = 0.05 ;
 
 %% State Space
 global n_E n_Z n_A n_State ...
-       vA_Grid mA_Grid A_Min A_Max Grid_Curvature vA_Grid_ben ...
+       vA_Grid mA_Grid_W mA_Grid_E A_Min A_Max Grid_Curvature vA_Grid_ben ...
        vE_Grid mE_Grid mE_Transition_W mE_Transition_E ...
-       mE_Transition_W_VFI mE_Transition_E_VFI ...
-	   vZ_Grid mZ_Grid mZ_Transition vZ_Invariant vKappa mKappa
+       mE_Transition_W_VFI mE_Transition_E_VFI jfr_E ...
+	   vZ_Grid mZ_Grid mZ_Ind_W mZ_Transition vZ_Invariant vKappa mKappa
 	
 % Order of approximation
 n_E     = 4   ; % number of gridpoints for labor productivity
@@ -71,35 +71,34 @@ elseif n_E == 3
     mE_Transition_W = [0.21  0.74 0.05;
                        0.14  0.785 0.075;
                        0.08  0.60 0.32];
-    mE_Transition_E = [0.55  0.41 0.04;
-                       0.10  0.80 0.10;
-                       0.07  0.67 0.26];
+    mE_Transition_E = [0.55  0.41 0.04];
 else
     [vE_Grid,mE_Transition] = MarkovAR(n_E-1,3,0.885,0.1) ;
     vE_Grid = exp(vE_Grid) ;
     vE_Grid = [b ; vE_Grid] ;
+    [vE_Invariant,~]  = eig(mE_Transition') ;
+    vE_Invariant      = vE_Invariant(:,1)/sum(vE_Invariant(:,1)) ;
+    
     vE_Grid = [b ; 1 ; 10 ; 20 ] ;
     mE_Transition_W = [1-jfr_W , jfr_W , zeros(1,n_E-2);
                      jdr_W*ones(n_E-1,1) (1-jdr_W)*mE_Transition];
-    mE_Transition_E = [1-jfr_E , jfr_E , zeros(1,n_E-2);
-                     jdr_E*ones(n_E-1,1) (1-jdr_E)*mE_Transition];
+    mE_Transition_E = [0 ; vE_Invariant] ;
 end 
     [vE_Invariant_W,~]  = eig(mE_Transition_W') ;
     vE_Invariant_W      = vE_Invariant_W(:,2)/sum(vE_Invariant_W(:,2)) ;
-    [vE_Invariant_E,~]  = eig(mE_Transition_E') ;
-    vE_Invariant_E      = vE_Invariant_E(:,2)/sum(vE_Invariant_E(:,2)) ;
     
     % Matrix for VFI
     mE_Transition_W_VFI = NaN(n_A,n_E,n_Z,n_A,n_E) ; 
-    mE_Transition_E_VFI = NaN(n_A,n_E,n_Z,n_A,n_E) ; 
-    for i_e = 1:n_E 
+    mE_Transition_E_VFI = NaN(n_A, 1 ,n_Z,n_A,n_E) ; 
     for i_ep = 1:n_E 
+        mE_Transition_E_VFI(:,:,:,:,i_ep)   = mE_Transition_E(i_ep) ;
+    for i_e = 1:n_E 
         mE_Transition_W_VFI(:,i_e,:,:,i_ep) = mE_Transition_W(i_e,i_ep) ;
-        mE_Transition_E_VFI(:,i_e,:,:,i_ep) = mE_Transition_E(i_e,i_ep) ;
     end
     end
     
-    disp('vEGrid vEInvariant_W vE_Invariant_E'); disp([vE_Grid vE_Invariant_W vE_Invariant_E])
+    
+    disp('vEGrid vEInvariant_W'); disp([vE_Grid vE_Invariant_W])
 
 % Entrepreneurial Productivity Types
 if n_Z == 2
@@ -125,9 +124,14 @@ end
     
     
 % Make matrix versions of grids
-mE_Grid = repmat(vE_Grid',[n_A 1 n_Z]);
-mA_Grid = repmat(vA_Grid,[1 n_E n_Z]);
-mZ_Grid = repmat(reshape(vZ_Grid,[1,1,n_Z]) , [n_A,n_E,1]) ;    
+mE_Grid   = repmat(vE_Grid',[n_A 1 n_Z]);
+mZ_Grid   = repmat(reshape(vZ_Grid,[1,1,n_Z]) , [n_A,1,1]) ; 
+mA_Grid_W = repmat(vA_Grid,[1 n_E n_Z]);
+mA_Grid_E = repmat(vA_Grid,[1  1  n_Z]);
+mZ_Ind_W  = ones(n_A,n_E,n_Z) ; 
+for i=1:n_Z
+    mZ_Ind_W(:,:,i) = i ;
+end 
 
 %% Set approximation parameters
 

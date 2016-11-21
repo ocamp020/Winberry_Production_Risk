@@ -31,7 +31,7 @@ solver = 'fzero' ;
     
     if strcmp(solver,'fsolve')
         options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
-        [x,err,exitflag] = fsolve(@(x) Find_DBN_Histogram(x,solver),x_0,options);
+        [x,err,exitflag] = fsolve(@(x)Find_DBN_Histogram(x,solver),x_0,options);
     elseif strcmp(solver,'fminsearch')
         options = optimset('Display','iter','TolFun',1e-05,'TolX',1e-06);
         [x,err,exitflag] = fminsearch(@(x) Find_DBN_Histogram(x,solver),x_0,options);

@@ -6,20 +6,16 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
 
 
 %% Initialization (global variables)
-    global ggamma aalpha ddelta mmu llambda AA tau_n mKappa r ...
-    	   mZ_Transition mE_Transition_W mE_Transition_E vZ_Grid vE_Grid  ...
-           n_E n_Z n_A vA_Grid mA_Grid mZ_Grid n_State
+    global ggamma aalpha ddelta mmu llambda AA tau_n mKappa r jfr_E ...
+    	   mZ_Transition mE_Transition_W mE_Transition_E vE_Grid  ...
+           n_E n_Z n_A vA_Grid mA_Grid_E mA_Grid_W mZ_Grid mZ_Ind_W n_State
 
 %% Declare prices
     w = x(1);
         
-        
-% disp('Price Wage Interest Rate     Optimal Capital')
-% disp([p w r (mmu*p*vZ_Grid.^mmu/(r+ddelta)).^(1/(1-mmu))])
-        
     
 %% Agent's value and policy functions (by discrete VFI)
-    [Ap_W_VFI,Ap_E_VFI,OC_W_VFI,OC_E_VFI,VW_VFI,VE_VFI] = Discrete_VFI(r,w) ;
+    [Ap_W_VFI,Ap_E_VFI,OC_W_VFI,OC_E1_VFI,OC_E2_VFI,VW_VFI,VE_VFI] = Discrete_VFI(r,w) ;
     % disp(VW_VFI(:)) 
 %     figure; plot(vA_Grid,[VW_VFI(:,:,1),VW_VFI(:,:,2),VW_VFI(:,:,3)]); title('VW');
 %     figure; plot(vA_Grid,[VE_VFI(:,:,1),VE_VFI(:,:,2),VE_VFI(:,:,3)]); title('VE');
@@ -37,30 +33,35 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
     
     % Assets transition matrix (Before occupational choice)
     mA_W_Transition = zeros(n_Z*n_E*n_A,n_A);
-    mA_E_Transition = zeros(n_Z*n_E*n_A,n_A);
+    mA_E_Transition = zeros(n_Z* 1 *n_A,n_A);
     for i_a = 1:n_A
         mA_W_Transition(vS_W == i_a,i_a) = 1 ;
         mA_E_Transition(vS_E == i_a,i_a) = 1 ;
     end
-    mA_Transition = [repmat(mA_W_Transition, [1,n_E*n_Z]) , zeros(n_State) ;
-                     zeros(n_State) , repmat(mA_E_Transition, [1,n_E*n_Z])];
+    mA_Transition = [repmat(mA_W_Transition, [1,n_E*n_Z]) , zeros(n_State,n_A*n_Z) ;
+                     zeros(n_A*n_Z,n_State) , repmat(mA_E_Transition, [1,n_Z])];
     mA_Transition = sparse(mA_Transition) ;
     
     % Epsilon
-    mE_Transition_Histogram = [ repmat( kron(mE_Transition_W,ones(n_A)) , [n_Z,n_Z] ) , zeros(n_State) ; 
-                                zeros(n_State) , repmat( kron(mE_Transition_E,ones(n_A)) , [n_Z,n_Z] ) ];
+    mE_Transition_Histogram = [ repmat( kron(mE_Transition_W,ones(n_A)) , [n_Z,n_Z] ) , zeros(n_State,n_A*n_Z) ; 
+                                zeros(n_A*n_Z,n_State) , ones(n_A*n_Z) ];
     mE_Transition_Histogram = sparse(mE_Transition_Histogram) ;
 
     % Z
-    mZ_Transition_Histogram = kron( eye(2) , kron( ggamma*eye(n_Z) + (1-ggamma)*mZ_Transition , ones(n_A*n_E) ) ) ;
+    mZ_Transition_Histogram = [kron( ggamma*eye(n_Z) + (1-ggamma)*mZ_Transition , ones(n_A*n_E) ) , zeros(n_State,n_A*n_Z) ;
+                                zeros(n_A*n_Z,n_State)  , kron( ggamma*eye(n_Z) + (1-ggamma)*mZ_Transition , ones(n_A) )];
     mZ_Transition_Histogram = sparse(mZ_Transition_Histogram) ;
     
     % Full transition matrix (Before occupational choice)
     mTransition = mA_Transition .* mE_Transition_Histogram .* mZ_Transition_Histogram ;
-    
+    if abs(min(sum(mTransition,2))-1)>1e-10 || abs(max(sum(mTransition,2))-1)>1e-10
+        disp([min(sum(mTransition,2)) max(sum(mTransition,2))])
+        error('mTransition not working - Before occupational choice')
+    end 
     % Ocupational Choice
     OC_W = OC_W_VFI(:) ; 
-    OC_E = OC_E_VFI(:) ; 
+    OC_E1 = OC_E1_VFI(:) ; 
+    OC_E2 = OC_E2_VFI(:) ; 
     
         % Adjust savings choice by switching cost
         vS_W_cost = vA_Grid(vS_W)-mKappa(:) ;
@@ -75,26 +76,61 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
         % Compute lottery matrices
         vPrBelow = min( max( (vValAbove - vS_W_cost) ./ (vValAbove - vValBelow) , 0 ) , 1 );
         vPrAbove = min( max( (vS_W_cost - vValBelow) ./ (vValAbove - vValBelow) , 0 ) , 1 );
+        vPrBelow(vIndBelow==vIndAbove) = 1 ; 
+        vPrAbove(vIndBelow==vIndAbove) = 0 ; 
         
         % Adjust mTransition for type W agents
         aux = [1:n_State];
         aux = aux(OC_W==1);
+        z_ind = mZ_Ind_W(:) ;
         for i = aux
-            mTransition(1:n_State,n_State + vIndBelow(i)) = mTransition(1:n_State,n_State + vIndBelow(i)) + ...
-                                                vPrBelow(i)*mTransition(1:n_State,i) ;
-            mTransition(1:n_State,n_State + vIndAbove(i)) = mTransition(1:n_State,n_State + vIndAbove(i)) + ...
-                                                vPrAbove(i)*mTransition(1:n_State,i) ;
-            mTransition(1:n_State,i) = 0 ;
-            
+            mTransition(1:n_State,n_State + vIndBelow(i)+n_A*(z_ind(i)-1)) = ...
+                mTransition(1:n_State,n_State + vIndBelow(i)+n_A*(z_ind(i)-1)) + ...
+                vPrBelow(i)*mTransition(1:n_State,i) ;
+            mTransition(1:n_State,n_State + vIndAbove(i)+n_A*(z_ind(i)-1)) = ...
+                mTransition(1:n_State,n_State + vIndAbove(i)+n_A*(z_ind(i)-1)) + ...
+                vPrAbove(i)*mTransition(1:n_State,i) ;
+            mTransition(1:n_State,i) = 0 ;     
         end
+        if abs(min(sum(mTransition,2))-1)>1e-10 || abs(max(sum(mTransition,2))-1)>1e-10
+            disp([min(sum(mTransition,2)) max(sum(mTransition,2))])
+            error('mTransition not working - After worker occupational choice')
+        end 
                                                 
         % Adjust mTransition for type E agents
-        mTransition(n_State+1:end,[OC_E;zeros(n_State,1)]==1) = mTransition(n_State+1:end,[zeros(n_State,1);OC_E]==1) ;
-        mTransition(n_State+1:end,[zeros(n_State,1);OC_E]==1) = 0 ;
-
+        i=1;
+        %stay_prob = ones(1,n_A*n_Z) ;
+        mTransition_aux = mTransition;
+        for i_z = 1:n_Z
+        for i_ep = 1:n_E
+        for i_a = 1:n_A
+            if i_ep ==1 
+                % Move to unemployment 
+                mTransition(n_State+1:end,i) = mTransition(n_State+1:end,i) + ...
+                    (1-jfr_E)*OC_E1_VFI(i_a,1,i_z)*mTransition_aux(n_State+1:end,i_a+n_A*(i_z-1));
+                mTransition(n_State+1:end,i_a+n_A*(i_z-1)) = mTransition(n_State+1:end,i_a+n_A*(i_z-1)) - ...
+                    (1-jfr_E)*OC_E1_VFI(i_a,1,i_z)*mTransition_aux(n_State+1:end,i_a+n_A*(i_z-1)); 
+                %disp([i_ep stay_prob(i_a+n_A*(i_z-1)) (1-jfr_E)*OC_E1_VFI(i_a,1,i_z)])
+                %stay_prob(i_a+n_A*(i_z-1)) = stay_prob(i_a+n_A*(i_z-1)) - (1-jfr_E)*OC_E1_VFI(i_a,1,i_z) ;
+            else 
+                % Move to employment 
+                mTransition(n_State+1:end,i) = mTransition(n_State+1:end,i) + ...
+                    jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z)*mTransition_aux(n_State+1:end,i_a+n_A*(i_z-1));
+                mTransition(n_State+1:end,i_a+n_A*(i_z-1)) = mTransition(n_State+1:end,i_a+n_A*(i_z-1)) - ...
+                    jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z)*mTransition_aux(n_State+1:end,i_a+n_A*(i_z-1));
+                %disp([i_ep stay_prob(i_a+n_A*(i_z-1)) jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z)])
+                %stay_prob(i_a+n_A*(i_z-1)) = stay_prob(i_a+n_A*(i_z-1)) - jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z) ;
+            end 
+            i = i+1 ;
+        end 
+        end 
+        end 
+        % Multiply columns by stay probability
+        % mTransition(n_State+1:end,n_State+1:end) = repmat(max(stay_prob,0),[n_A*n_Z,1]).*mTransition(n_State+1:end,n_State+1:end);
+        
     % Compute invariant histogram
     errHistogram = 100;	iterationHistogram = 0;
-    G = ones(n_State*2,1) ./ (n_State*2);
+    G = ones(n_State+n_A*n_Z,1) ./ (n_State+n_A*n_Z);
     while errHistogram > 1e-12 && iterationHistogram < 1e4
         G_New = mTransition' * G;
         errHistogram = max(abs(G_New - G)); 
@@ -106,12 +142,12 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E_out,V
     G_W = G(1:n_State)     ; 
     G_E = G(n_State+1:end) ;
     mDBN_W = reshape(full(G_W),n_A,n_E,n_Z);    
-    mDBN_E = reshape(full(G_E),n_A,n_E,n_Z);   
+    mDBN_E = reshape(full(G_E),n_A, 1 ,n_Z);   
         
         
 %% Update prices 
     % Labor supply and new taxes
-    K_demand = min( max( 0 , llambda*mA_Grid ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w))^mmu).^(1/(1-aalpha-mmu)) ) ;
+    K_demand = min( max( 0 , llambda*mA_Grid_E ) , (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w))^mmu).^(1/(1-aalpha-mmu)) ) ;
     N_supply = sum( vE_Grid(2:n_E).*squeeze(sum(sum(mDBN_W(:,2:n_E,:),3),1))' ) ;
     N_demand = sum(sum(sum( mDBN_E .* (mmu*AA*mZ_Grid.*K_demand.^aalpha/((1+tau_n)*w)).^(1/(1-mmu)) ))) ;
     
