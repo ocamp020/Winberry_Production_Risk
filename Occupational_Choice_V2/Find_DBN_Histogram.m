@@ -129,7 +129,11 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E1_out,
             disp([min(sum(mTransition,2)) max(sum(mTransition,2))])
             error('mTransition not working - After SE occupational choice')
         end 
-        figure; spy(mTransition)
+        
+        
+%         figure; spy(mTransition)
+
+
     % Compute invariant histogram
     errHistogram = 100;	iterationHistogram = 0;
     G = ones(n_State+n_A*n_Z,1) ./ (n_State+n_A*n_Z);

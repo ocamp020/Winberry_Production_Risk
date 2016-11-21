@@ -17,13 +17,13 @@ solver = 'fzero' ;
 
 %% Stationary Equilibrium (Histogram Method and discrete VFI)
 
-    % Graph of excess supply function
-        w_grid = linspace(0.8,1.0,100) ;
-        for i=1:numel(w_grid)
-            es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
-            disp([i,w_grid(i),es(i)])
-        end 
-        figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
+%     % Graph of excess supply function
+%         w_grid = linspace(0.8,1.0,100) ;
+%         for i=1:numel(w_grid)
+%             es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
+%             disp([i,w_grid(i),es(i)])
+%         end 
+%         figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
 
 
     t0 = tic;
