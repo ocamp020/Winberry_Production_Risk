@@ -15,11 +15,11 @@ global n_A n_E n_Z vA_Grid vA_Grid_ben bbeta ggamma
 %% Welfare Gain by state
     % Approximate value functions
         V_W_aux = NaN(n_A,n_E,n_Z);
-        V_E_aux = NaN(n_A,n_E,n_Z);
-        for i_z=1:n_Z
+        V_E_aux = NaN(n_A, 1 ,n_Z);
+        for i_z=1:n_Z           
+            V_E_aux(:,1,i_z) = interp1(vA_Grid,V_E_exp(:,1,i_z),vA_Grid_ben) ;
         for i_e=1:n_E
             V_W_aux(:,i_e,i_z) = interp1(vA_Grid,V_W_exp(:,i_e,i_z),vA_Grid_ben) ;
-            V_E_aux(:,i_e,i_z) = interp1(vA_Grid,V_E_exp(:,i_e,i_z),vA_Grid_ben) ;
         end 
         end
         
@@ -29,7 +29,7 @@ global n_A n_E n_Z vA_Grid vA_Grid_ben bbeta ggamma
 
     
 %% Average Welfare Gains
-    Av_CE   = sum(sum(sum( CE_W.*mDBN_W + CE_E.*mDBN_E ))) ;
+    Av_CE   = sum(sum(sum( CE_W.*mDBN_W ))) + sum(sum(sum( CE_E.*mDBN_E ))) ;
     Av_CE_W = sum(sum(sum( CE_W(:,2:n_E,:).*mDBN_W(:,2:n_E,:) ))) / sum(sum(sum( mDBN_W(:,2:n_E,:) ))) ;
     Av_CE_U = sum(sum(sum( CE_W(:,1,:).*mDBN_W(:,1,:) ))) / sum(sum(sum( mDBN_W(:,1,:) ))) ;
     Av_CE_E = sum(sum(sum( CE_E.*mDBN_E ))) / sum(sum(sum( mDBN_E ))) ;
@@ -37,9 +37,6 @@ global n_A n_E n_Z vA_Grid vA_Grid_ben bbeta ggamma
     Mat = [Av_CE_E Av_CE_W Av_CE_U Av_CE];
     Mat = [{'CE - SE','CE - W','CE - U','CE - All'};num2cell(Mat)] ;
     disp(' '); disp('Welfare Gain by state of benchmark'); disp(Mat); disp(' ');
-    
-    Mat = squeeze(sum( CE_W.*mDBN_W + CE_E.*mDBN_E ,1))./squeeze(sum( mDBN_W + mDBN_E ,1)) ;
-    disp(' '); disp('Welfare Gain for All Agentes by EZ'); disp(Mat); disp(' ');
  
     Mat = squeeze(sum( CE_W.*mDBN_W ,1))./squeeze(sum( mDBN_W ,1)) ;
     disp(' '); disp('Welfare Gain for Workers by EZ'); disp(Mat); disp(' ');
