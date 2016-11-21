@@ -1,0 +1,1442 @@
+[Warning: The value of local variables may have been changed to match the globals.
+Future versions of MATLAB will require that you declare a variable to be global before
+you use that variable.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Set_Parameters', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Set_Parameters.m', 41)" style="font-weight:bold">Set_Parameters</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Set_Parameters.m',41,0)">line 41</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Occupational_Choice_V2_Main', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Occupational_Choice_V2_Main.m', 12)" style="font-weight:bold">Occupational_Choice_V2_Main</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Occupational_Choice_V2_Main.m',12,0)">line 12</a>)] 
+vEGrid vEInvariant_W
+   0.010000000000000   0.117647058823529
+   1.000000000000000   0.763940338803588
+  10.000000000000000   0.116868487373698
+  20.000000000000000   0.001544114999185
+
+vZGrid vZInvariant
+   0.659883355404551   0.000135256470549
+   0.757957374408144   0.014381169958674
+   0.870607474358074   0.218869628573835
+   1.000000000000000   0.533227889993883
+   1.148623265309469   0.218869628573835
+   1.319335405610186   0.014381169958674
+   1.515419341630365   0.000135256470549
+
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Discrete_VFI', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Discrete_VFI.m', 64)" style="font-weight:bold">Discrete_VFI</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Discrete_VFI.m',64,0)">line 64</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Find_DBN_Histogram', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Find_DBN_Histogram.m', 18)" style="font-weight:bold">Find_DBN_Histogram</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Find_DBN_Histogram.m',18,0)">line 18</a>)
+    [Ap_W_VFI,Ap_E_VFI,OC_W_VFI,OC_E1_VFI,OC_E2_VFI,VW_VFI,VE_VFI] = Discrete_VFI(r,w) ;
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Occupational_Choice_V2_Main', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Occupational_Choice_V2_Main.m', 23)" style="font-weight:bold">Occupational_Choice_V2_Main</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Occupational_Choice_V2_Main.m',23,0)">line 23</a>)
+            es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
+} 
+{Undefined function or variable 'x'.
+} 
+x
+{Undefined function or variable 'x'.
+} 
+x=2
+
+x =
+
+     2
+
+r_ben = r    ;
+    w_ben = x(1) ;
+Set_Parameters
+vEGrid vEInvariant_W
+   0.010000000000000   0.117647058823529
+   1.000000000000000   0.763940338803588
+  10.000000000000000   0.116868487373698
+  20.000000000000000   0.001544114999185
+
+vZGrid vZInvariant
+   0.659883355404551   0.000135256470549
+   0.757957374408144   0.014381169958674
+   0.870607474358074   0.218869628573835
+   1.000000000000000   0.533227889993883
+   1.148623265309469   0.218869628573835
+   1.319335405610186   0.014381169958674
+   1.515419341630365   0.000135256470549
+
+   1.0e-08 *
+
+   0.060962532772195   0.771443512323837
+
+price residual
+    -7.104809795516423e-09
+
+ 
+    'Agent Composition'        ' '                     ' '                    
+    'Workers'                  'Self-Employed'         'Unemployed'           
+    [2.557362827725613e-08]    [99.999999971465797]    [2.958445021111728e-09]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Self-Employed by EZ'                      []                      []
+    [ 99.999999971467929]    [99.999999971467929]    [99.999999971467929]
+
+  Columns 4 through 6
+
+                      []                      []                      []
+    [99.999999971467929]    [99.999999971467929]    [99.999999971467929]
+
+  Column 7
+
+                      []
+    [99.999999971467929]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Composition Workers'                       []                      []
+    [    0.001402452698354]    [0.149116049917180]    [ 2.269424153497729]
+    [    0.010289134952280]    [1.093994230928127]    [16.649696212006575]
+    [    0.001807099654215]    [0.192140214468181]    [ 2.924216701116382]
+    [2.695975006648826e-05]    [0.002866500553914]    [ 0.043625790762827]
+
+  Columns 4 through 6
+
+                      []                      []                     []
+    [ 5.528954660159789]    [ 2.269424153497728]    [0.149116049917180]
+    [40.563336439219199]    [16.649696212006571]    [1.093994230928127]
+    [ 7.124213220360744]    [ 2.924216701116388]    [0.192140214468181]
+    [ 0.106284679648594]    [ 0.043625790762827]    [0.002866500553914]
+
+  Column 7
+
+                         []
+    [    0.001402452698354]
+    [    0.010289134952280]
+    [    0.001807099654215]
+    [2.695975006648894e-05]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Composition Self-Employed'                     []                      []
+    [        0.013525647054915]    [1.438116995867409]    [21.886962857383612]
+
+  Columns 4 through 6
+
+                      []                      []                     []
+    [53.322788999388173]    [21.886962857383580]    [1.438116995867409]
+
+  Column 7
+
+                     []
+    [0.013525647054915]
+
+ 
+ 
+Transitions
+    ' '    'Up'                    'Wp'                    'Ep'               
+    'U'    [69.999999999999844]    [                30]    [                0]
+    'W'    [ 3.409248839272067]    [96.000000000000128]    [0.590751160727947]
+    'E'    [                 0]    [                 0]    [              100]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Top Wealth Shares'                      []                      []
+    'pct'                  [                10]    [                25]
+    'Share'                [99.999999999999943]    [99.999999999999943]
+
+  Columns 4 through 6
+
+                      []                      []                      []
+    [                50]    [                75]    [                90]
+    [99.999999999999943]    [99.999999999999943]    [99.999999999999943]
+
+  Column 7
+
+                      []
+    [                99]
+    [99.999999999999943]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Aggregate Variables'      ' '                        ' '                    
+    'Assets'                   'Capital'                  'Labor'                
+    [1.000043425273251e-04]    [1.010545887488535e-07]    [7.714435123238372e-09]
+
+  Column 4
+
+    ' '                    
+    'Output'               
+    [2.706819341487150e-08]
+
+ 
+ 
+    'Aggregate Variables'      ' '                    
+    'Labor Demand'             'Labor Supply'         
+    [7.714435123238372e-09]    [6.096253277219489e-10]
+
+ 
+Set_Parameters
+vEGrid vEInvariant_W
+   0.010000000000000   0.117647058823529
+   1.000000000000000   0.763940338803588
+  10.000000000000000   0.116868487373698
+  20.000000000000000   0.001544114999185
+
+vZGrid vZInvariant
+   0.659883355404551   0.000135256470549
+   0.757957374408144   0.014381169958674
+   0.870607474358074   0.218869628573835
+   1.000000000000000   0.533227889993883
+   1.148623265309469   0.218869628573835
+   1.319335405610186   0.014381169958674
+   1.515419341630365   0.000135256470549
+
+   1.0e-03 *
+
+   0.000000603640149   0.179774770617471
+
+price residual
+    -1.797741669773222e-04
+
+ 
+    'Agent Composition'        ' '                     ' '                    
+    'Workers'                  'Self-Employed'         'Unemployed'           
+    [2.532441636361302e-08]    [99.999999971729295]    [2.930053723979086e-09]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Self-Employed by EZ'                      []                      []
+    [ 99.999999971729324]    [99.999999971732748]    [99.999999971739783]
+
+  Columns 4 through 6
+
+                      []                      []                      []
+    [99.999999971744785]    [99.999999971751762]    [99.999999971775694]
+
+  Column 7
+
+                      []
+    [99.999999972093434]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Composition Workers'                       []                      []
+    [    0.001403653718529]    [0.149225193898898]    [ 2.270316928758435]
+    [    0.010295133459703]    [1.094497813602773]    [16.653208430100939]
+    [    0.001807649462844]    [0.192177853178775]    [ 2.924266265368935]
+    [2.696199800900783e-05]    [0.002866473869245]    [ 0.043619531052462]
+
+  Columns 4 through 6
+
+                      []                      []                     []
+    [ 5.529901382342460]    [ 2.269094061094018]    [0.148913711553341]
+    [40.564692447020519]    [16.646119180578157]    [1.092831972761086]
+    [ 7.123357278099666]    [ 2.923317016248724]    [0.191971416601953]
+    [ 0.106257890391802]    [ 0.043608446480686]    [0.002864207399405]
+
+  Column 7
+
+                         []
+    [    0.001375743269455]
+    [    0.010163182565856]
+    [    0.001793352156258]
+    [2.682296705639100e-05]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Composition Self-Employed'                     []                      []
+    [        0.013525647054913]    [1.438116995867225]    [21.886962857382297]
+
+  Columns 4 through 6
+
+                      []                      []                     []
+    [53.322788999387896]    [21.886962857384880]    [1.438116995867840]
+
+  Column 7
+
+                     []
+    [0.013525647054962]
+
+ 
+ 
+Transitions
+    ' '    'Up'                    'Wp'                    'Ep'                   
+    'U'    [69.999999164285569]    [29.999999999999925]    [8.357143381491905e-07]
+    'W'    [ 3.409819187630960]    [96.000000000000142]    [    0.590180812369036]
+    'E'    [                 0]    [                 0]    [                  100]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Top Wealth Shares'                         []                         []
+    'pct'                  [                   10]    [                   25]
+    'Share'                [1.000000000000000e+02]    [1.000000000000000e+02]
+
+  Columns 4 through 6
+
+                         []                         []                         []
+    [                   50]    [                   75]    [                   90]
+    [1.000000000000000e+02]    [1.000000000000000e+02]    [1.000000000000000e+02]
+
+  Column 7
+
+                         []
+    [                   99]
+    [1.000000000000000e+02]
+
+ 
+ 
+  Columns 1 through 3
+
+    'Aggregate Variables'      ' '                        ' '                    
+    'Assets'                   'Capital'                  'Labor'                
+    [1.000043070448926e-04]    [1.500000283937648e-04]    [1.797747706174710e-04]
+
+  Column 4
+
+    ' '                    
+    'Output'               
+    [6.307886688332311e-04]
+
+ 
+ 
+    'Aggregate Variables'      ' '                    
+    'Labor Demand'             'Labor Supply'         
+    [1.797747706174710e-04]    [6.036401487056795e-10]
+
+ 
+format short
+OC_E1(:)
+
+ans =
+
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     1
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+
+Find_DBN_Histogram(x_0,solver)
+{Undefined function or variable 'x_0'.
+} 
+Find_DBN_Histogram(x,solver)
+   1.0e-03 *
+
+    0.0000    0.1798
+
+
+ans =
+
+  -1.7977e-04
+
+Find_DBN_Histogram(x,solver)
+    2.0917    0.0018
+
+
+ans =
+
+    2.0899
+
+Set_Parameters
+{Undefined function or variable 'mE_Invariant'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Set_Parameters', '/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Set_Parameters.m', 85)" style="font-weight:bold">Set_Parameters</a> (<a href="matlab: opentoline('/Users/s-ocampo/Dropbox/Research/Entrepreneurship/Winberry/Production_Risk/Occupational_Choice_V2/Set_Parameters.m',85,0)">line 85</a>)
+    mE_Transition_E = [0 ; mE_Invariant] ;
+} 
+Set_Parameters
+vEGrid vEInvariant_W
+    0.0100    0.1176
+    1.0000    0.7639
+   10.0000    0.1169
+   20.0000    0.0015
+
+vZGrid vZInvariant
+    0.6599    0.0001
+    0.7580    0.0144
+    0.8706    0.2189
+    1.0000    0.5332
+    1.1486    0.2189
+    1.3193    0.0144
+    1.5154    0.0001
+
+    7.5354    0.0109
+
+price residual
+    7.5245
+
+ 
+    'Agent Composition'    ' '                ' '         
+    'Workers'              'Self-Employed'    'Unemployed'
+    [          69.3959]    [      30.5042]    [    0.0998]
+
+ 
+ 
+  Columns 1 through 4
+
+    'Self-Employed by EZ'           []           []           []
+    [            30.4804]    [30.4787]    [30.4885]    [30.5037]
+
+  Columns 5 through 7
+
+           []           []           []
+    [30.5177]    [30.5852]    [30.6205]
+
+ 
+ 
+  Columns 1 through 4
+
+    'Composition Workers'          []          

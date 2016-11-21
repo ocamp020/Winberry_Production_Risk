@@ -107,17 +107,17 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E1_out,
             if i_ep ==1 
                 % Move to unemployment 
                 mTransition(n_State+1:end,i) = mTransition(n_State+1:end,i) + ...
-                    (1-jfr_E)*OC_E1_VFI(i_a,1,i_z)*mTransition_aux(n_State+1:end,i_a+n_A*(i_z-1));
-                mTransition(n_State+1:end,i_a+n_A*(i_z-1)) = mTransition(n_State+1:end,i_a+n_A*(i_z-1)) - ...
-                    (1-jfr_E)*OC_E1_VFI(i_a,1,i_z)*mTransition_aux(n_State+1:end,i_a+n_A*(i_z-1)); 
+                    (1-jfr_E)*OC_E1_VFI(i_a,1,i_z)*mTransition_aux(n_State+1:end,n_State+i_a+n_A*(i_z-1));
+                mTransition(n_State+1:end,n_State+i_a+n_A*(i_z-1)) = mTransition(n_State+1:end,n_State+i_a+n_A*(i_z-1)) - ...
+                    (1-jfr_E)*OC_E1_VFI(i_a,1,i_z)*mTransition_aux(n_State+1:end,n_State+i_a+n_A*(i_z-1)); 
                 %disp([i_ep stay_prob(i_a+n_A*(i_z-1)) (1-jfr_E)*OC_E1_VFI(i_a,1,i_z)])
                 %stay_prob(i_a+n_A*(i_z-1)) = stay_prob(i_a+n_A*(i_z-1)) - (1-jfr_E)*OC_E1_VFI(i_a,1,i_z) ;
             else 
                 % Move to employment 
                 mTransition(n_State+1:end,i) = mTransition(n_State+1:end,i) + ...
-                    jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z)*mTransition_aux(n_State+1:end,i_a+n_A*(i_z-1));
-                mTransition(n_State+1:end,i_a+n_A*(i_z-1)) = mTransition(n_State+1:end,i_a+n_A*(i_z-1)) - ...
-                    jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z)*mTransition_aux(n_State+1:end,i_a+n_A*(i_z-1));
+                    jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z)*mTransition_aux(n_State+1:end,n_State+i_a+n_A*(i_z-1));
+                mTransition(n_State+1:end,n_State+i_a+n_A*(i_z-1)) = mTransition(n_State+1:end,n_State+i_a+n_A*(i_z-1)) - ...
+                    jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z)*mTransition_aux(n_State+1:end,n_State+i_a+n_A*(i_z-1));
                 %disp([i_ep stay_prob(i_a+n_A*(i_z-1)) jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z)])
                 %stay_prob(i_a+n_A*(i_z-1)) = stay_prob(i_a+n_A*(i_z-1)) - jfr_E*mE_Transition_E(i_ep)*OC_E2_VFI(i_a,i_ep,i_z) ;
             end 
@@ -125,9 +125,11 @@ function [residual,mDBN_W_out,mDBN_E_out,mAp_W_out,mAp_E_out,OC_W_out,OC_E1_out,
         end 
         end 
         end 
-        % Multiply columns by stay probability
-        % mTransition(n_State+1:end,n_State+1:end) = repmat(max(stay_prob,0),[n_A*n_Z,1]).*mTransition(n_State+1:end,n_State+1:end);
-        
+        if abs(min(sum(mTransition,2))-1)>1e-10 || abs(max(sum(mTransition,2))-1)>1e-10
+            disp([min(sum(mTransition,2)) max(sum(mTransition,2))])
+            error('mTransition not working - After SE occupational choice')
+        end 
+        figure; spy(mTransition)
     % Compute invariant histogram
     errHistogram = 100;	iterationHistogram = 0;
     G = ones(n_State+n_A*n_Z,1) ./ (n_State+n_A*n_Z);

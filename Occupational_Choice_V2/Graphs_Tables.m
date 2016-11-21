@@ -9,7 +9,7 @@ global mmu ddelta llambda tau_k tau_n AA aalpha...
 
 %% Capital and Profits and Earnings
 
-    K  = min( max( 0 , llambda*mA_Grid_W ) , ...
+    K  = min( max( 0 , llambda*mA_Grid_E ) , ...
                (AA*mZ_Grid.*(aalpha/(r+ddelta)).^(1-mmu).*(mmu/((1+tau_n)*w))^mmu).^(1/(1-aalpha-mmu)) )  ;
     N  = (mmu*AA*mZ_Grid.*K.^aalpha/((1+tau_n)*w)).^(1/(1-mmu)) ;
     Pr = AA*mZ_Grid.*K.^aalpha.*N.^mmu - (r+ddelta)*K - (1+tau_n)*w*N;
@@ -47,13 +47,13 @@ global mmu ddelta llambda tau_k tau_n AA aalpha...
         % Entrepreneurs
         E_share    = sum(sum(sum(mDBN_E))) ;
         E_share_EZ = squeeze(sum(mDBN_E,1))/E_share ;
-        EZ_share_E = squeeze(sum(mDBN_E,1))./squeeze(sum(sum(mDBN_W+mDBN_E,1),2));
+        EZ_share_E = squeeze(sum(mDBN_E,1))./(squeeze(sum(sum(mDBN_W,1),2))+squeeze(sum(sum(mDBN_E,1),2)));
         
         Mat = 100*[W_share-W_share_U E_share W_share_U] ; 
         Mat = [{'Agent Composition',' ',' ';'Workers','Self-Employed','Unemployed'};num2cell(Mat)];
         disp(' '); disp(Mat); disp(' ');
         
-        Mat = 100*EZ_share_E ; 
+        Mat = 100*EZ_share_E' ; 
         Mat = [{'Self-Employed by EZ'} cell(1,n_Z-1);num2cell(Mat)];
         disp(' '); disp(Mat); disp(' ');
         
@@ -62,7 +62,7 @@ global mmu ddelta llambda tau_k tau_n AA aalpha...
         disp(' '); disp(Mat); disp(' ');
         
         
-        Mat = 100*E_share_EZ ; 
+        Mat = 100*E_share_EZ' ; 
         Mat = [{'Composition Self-Employed'} cell(1,n_Z-1);num2cell(Mat)];
         disp(' '); disp(Mat); disp(' ');
 
@@ -237,7 +237,11 @@ global mmu ddelta llambda tau_k tau_n AA aalpha...
         for i_e = 1:n_E
         for i_z = 1:n_Z
             subplot(n_E,n_Z,i_plot);
-            plot(vA_Grid,OC_E(:,i_e,i_z),'linewidth',2)
+            if i_e==1
+            plot(vA_Grid,OC_E1(:,i_e,i_z),'linewidth',2)
+            else
+            plot(vA_Grid,OC_E2(:,i_e,i_z),'linewidth',2)
+            end
             xlim([min(vA_Grid) max(vA_Grid)]); ylim([-1,2]);
             %title('OC E')
             i_plot = i_plot +1 ;

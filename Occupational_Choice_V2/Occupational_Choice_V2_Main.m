@@ -86,9 +86,9 @@ solver = 'fzero' ;
 
     [price_residual,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E1,OC_E2,V_W,V_E,Transition] = Find_DBN_Histogram(x,'bisection') ;
     disp('price residual'); disp(price_residual);
-return    
+   
     [A_ben,K_ben,N_ben,Y_ben,Earnings_W_ben,Earnings_E_ben] = ...
-        Graphs_Tables('ben',r_ben,w_ben,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E,V_W,V_E,Transition) ;
+        Graphs_Tables('ben',r_ben,w_ben,mDBN_W,mDBN_E,mAp_W,mAp_E,OC_W,OC_E1,OC_E2,V_W,V_E,Transition) ;
  
 return
 %% Experiment 1: Change in household's borrowing constraint

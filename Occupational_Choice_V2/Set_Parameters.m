@@ -82,7 +82,7 @@ else
     vE_Grid = [b ; 1 ; 10 ; 20 ] ;
     mE_Transition_W = [1-jfr_W , jfr_W , zeros(1,n_E-2);
                      jdr_W*ones(n_E-1,1) (1-jdr_W)*mE_Transition];
-    mE_Transition_E = [0 ; 0.8 ; 0.2 ; 0.0] ;
+    mE_Transition_E = [0 ; vE_Invariant] ;
 end 
     [vE_Invariant_W,~]  = eig(mE_Transition_W') ;
     vE_Invariant_W      = vE_Invariant_W(:,2)/sum(vE_Invariant_W(:,2)) ;
@@ -119,7 +119,7 @@ end
     disp('vZGrid vZInvariant'); disp([vZ_Grid' vZ_Invariant])
 
 % Entrepreneurial cost
-    vKappa = 0.00*ones(n_Z,1) ;
+    vKappa = 0.0*ones(n_Z,1) ;
     mKappa = repmat(reshape(vKappa,[1,1,n_Z]),[n_A,n_E,1]) ;
     
     
