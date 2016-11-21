@@ -195,9 +195,9 @@ disp([N_supply N_demand])
             VE_out    = VE_VFI    ;
 
             mTransition_out = NaN(3,3) ; 
-            U_ind = [ repmat(kron([1 ; 0 ; 0],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
-            W_ind = [ repmat(kron([0 ; 1 ; 1],ones(n_A,1)),n_Z,1) ; zeros(n_State,1) ]==1 ;
-            E_ind = [zeros(n_State,1) ; ones(n_State,1)]==1 ;
+            U_ind = [ repmat(kron([1 ; zeros(n_E-1,1)],ones(n_A,1)),n_Z,1) ; zeros(n_A*n_Z,1) ]==1 ;
+            W_ind = [ repmat(kron([0 ; ones(n_E-1,1)],ones(n_A,1)),n_Z,1) ; zeros(n_A*n_Z,1) ]==1 ;
+            E_ind = [zeros(n_State,1) ; ones(n_A*n_Z,1)]==1 ;
             % From Unemployment
             mTransition_out(1,1) = sum(sum(mTransition(U_ind,U_ind),2).*G(U_ind))/sum(G(U_ind)) ;
             mTransition_out(1,2) = sum(sum(mTransition(U_ind,W_ind),2).*G(U_ind))/sum(G(U_ind)) ;
