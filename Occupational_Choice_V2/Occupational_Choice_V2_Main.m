@@ -17,17 +17,17 @@ solver = 'fzero' ;
 
 %% Stationary Equilibrium (Histogram Method and discrete VFI)
 
-%     % Graph of excess supply function
-%         w_grid = linspace(0.8,1.0,100) ;
-%         for i=1:numel(w_grid)
-%             es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
-%             disp([i,w_grid(i),es(i)])
-%         end 
-%         figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
+    % Graph of excess supply function
+        w_grid = linspace(0.5056,0.5057,100) ;
+        for i=1:numel(w_grid)
+            es(i) = Find_DBN_Histogram(w_grid(i),'bisection') ;
+            disp([i,w_grid(i),es(i)])
+        end 
+        figure; hold on; plot(w_grid,es,'-o'); plot(w_grid,zeros(size(w_grid))); hold off; xlim([w_grid(1) w_grid(end)]);
 
 
     t0 = tic;
-    x_0 = [2.8];
+    x_0 = [0.5];
     
     if strcmp(solver,'fsolve')
         options = optimoptions('fsolve','Display',displayOpt,'TolFun',1e-4); % In older versions of MATLAB, use: options = optimset('Display',displayOpt); 
